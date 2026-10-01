@@ -274,3 +274,12 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 @media (max-width:1280px){.main-nav{gap:22px;font-size:15px}.brand-name span{display:none}}
 .hero-media img{color:transparent}
 @media (max-width:600px){.amb:not([open]) summary .ph{display:none}}
+
+/* Academy Diary post (diary/*.html) */
+.article .wrap{max-width:760px;display:flex;flex-direction:column;gap:20px}
+.article h1{font-size:clamp(32px,4.4vw,56px)}
+.article h2{font-size:clamp(24px,2.4vw,32px);margin-top:24px}
+.article p{margin:0;color:var(--body)}
+.article .ph{min-height:clamp(240px,40vw,440px)}
+.article .quote{margin:24px 0;padding-left:24px;border-left:4px solid var(--gold);font-size:clamp(22px,2.4vw,30px)}
+.article .quote span{display:block;margin-top:10px;font-family:var(--sans);font-size:15px;color:var(--muted)}

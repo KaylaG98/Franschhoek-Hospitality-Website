@@ -27,6 +27,9 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 - `css/site.css`: every style. Design tokens are at the top. Responsive breakpoints are 1100, 900 and 600px.
 - `js/site.js`: mobile menu, donation box (monthly/once, amounts, impact text, links to SnapScan) and click-to-play videos.
 - `.nojekyll`: stops GitHub Pages from processing the files.
+- `src/diary/YYYY-MM-slug.html`: Academy Diary posts, built to `diary/`. Copy `src/diary/_TEMPLATE.html` (files starting with `_` are not built). Write links as if the post sat at the root (`study.html`); `build.py` adds the `../`.
+- `build.py` also writes the redirect pages for old Wix addresses (`REDIRECTS`, e.g. `apply-now.html`) and `sitemap.xml`. Don't edit those by hand.
+- `MONTHLY-CHECKLIST.md`: what Kayla sends each month and what Claude does with it.
 
 ### Pages (7)
 
