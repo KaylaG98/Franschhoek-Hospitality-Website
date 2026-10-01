@@ -56,12 +56,70 @@ def header(active, donate_href):
 
 FOOTER = open("src/footer.html").read()
 
-for fname in sorted(os.listdir("src/pages")):
-    raw = open(os.path.join("src/pages", fname)).read()
+# Old Wix addresses -> new pages, so existing Google results and shared links keep working.
+REDIRECTS = {
+    "apply-now": "study.html#apply-form",
+    "itm-college-austria": "study.html#itm",
+    "get-involved": "support-us.html",
+    "meet-the-team": "about.html#team",
+    "news": "academy-diary.html",
+    "collaboration": "partners-contact.html#collaborations",
+    "sponsors": "partners-contact.html#sponsors",
+    "contact": "partners-contact.html#contact",
+}
+
+def read_page(path):
+    raw = open(path).read()
     m = re.match(r"<!--(.*?)-->\n", raw, re.S)
     meta = dict(line.split(": ",1) for line in m.group(1).strip().splitlines() if ": " in line)
-    body = raw[m.end():]
+    return meta, raw[m.end():]
+
+def relink(html, prefix):
+    """Point site-relative links one folder up, for pages built inside a subfolder."""
+    return re.sub(r'((?:href|src)=")(?!https?:|mailto:|tel:|#|/|\.\./|data:)', r"\1" + prefix, html)
+
+def page_url(path):
+    return SITE + ("" if path == "index.html" else path.replace(".html",""))
+
+def build(src, out, active, prefix=""):
+    meta, body = read_page(src)
     donate = "#give" if 'data-donate' in body else "support-us.html#give"
-    html = head(meta["title"], meta["description"], fname) + header(fname, donate) + '\n<main id="main">\n' + body + '</main>\n\n' + FOOTER + '<script src="js/site.js"></script>\n</body>\n</html>\n'
-    open(fname, "w").write(html)
-    print("built", fname)
+    html = head(meta["title"], meta["description"], out) + header(active, donate) + '\n<main id="main">\n' + body + '</main>\n\n' + FOOTER + '<script src="js/site.js"></script>\n</body>\n</html>\n'
+    if prefix:
+        html = relink(html, prefix)
+    open(out, "w").write(html)
+    print("built", out)
+
+built = []
+for fname in sorted(os.listdir("src/pages")):
+    build(os.path.join("src/pages", fname), fname, fname)
+    built.append(fname)
+
+# Academy Diary posts: src/diary/YYYY-MM-slug.html -> diary/YYYY-MM-slug.html (files starting with _ are templates)
+os.makedirs("diary", exist_ok=True)
+for fname in sorted(os.listdir("src/diary")):
+    if fname.startswith("_") or not fname.endswith(".html"):
+        continue
+    build(os.path.join("src/diary", fname), "diary/" + fname, "academy-diary.html", prefix="../")
+    built.append("diary/" + fname)
+
+for old, target in REDIRECTS.items():
+    canonical = page_url(target.split("#")[0])
+    open(old + ".html", "w").write(f"""<!doctype html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8">
+<title>This page has moved</title>
+<link rel="canonical" href="{canonical}">
+<meta http-equiv="refresh" content="0; url={target}">
+</head>
+<body>
+<p>This page has moved. <a href="{target}">Continue to the new page</a>.</p>
+</body>
+</html>
+""")
+    print("redirect", old, "->", target)
+
+urls = "".join(f"  <url><loc>{page_url(p)}</loc></url>\n" for p in built)
+open("sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + "</urlset>\n")
+print("built sitemap.xml")
