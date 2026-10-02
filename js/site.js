@@ -23,6 +23,10 @@
   }
   document.querySelectorAll('[data-donate]').forEach(function (box) {
     var state = { monthly: true, amount: 1000 };
+    // Giving cards link here with ?amount=2000&freq=once so the box opens with that choice
+    var q = new URLSearchParams(location.search);
+    if (Number(q.get('amount')) > 0) state.amount = Number(q.get('amount'));
+    if (q.get('freq') === 'once') state.monthly = false;
     var freqBtns = box.querySelectorAll('[data-freq]');
     var amtBtns = box.querySelectorAll('[data-amount]');
     var other = box.querySelector('[data-other]');
