@@ -102,12 +102,15 @@ active:
 
 <section class="bg-green">
   <div class="split">
-    <div class="ph green"><span>Portrait slot · student photo (with consent)</span></div>
+    <div class="video split-video" data-video="https://youtu.be/7DpkWPbGEUw">
+      <img src="https://img.youtube.com/vi/7DpkWPbGEUw/maxresdefault.jpg" alt="" onload="if(this.naturalWidth<200)this.src='https://img.youtube.com/vi/7DpkWPbGEUw/hqdefault.jpg'">
+      <button class="play" aria-label="Play the student interview"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M8 5.5l11 6.5-11 6.5z" fill="#17211B"/></svg></button>
+    </div>
     <div class="split-text">
       <span class="eyebrow">Student story</span>
       <p class="quote" style="color:#fff">A story that continues beyond the classroom</p>
       <p>[STUDENT NAME], [AGE], came to the Academy from [TOWN]. Today [HE/SHE] works as [ROLE] at [EMPLOYER].</p>
-      <a class="link-arrow" href="academy-diary.html" style="color:#fff">Watch the full interview →</a>
+      <a class="link-arrow" href="https://youtu.be/7DpkWPbGEUw" style="color:#fff">Watch the interview on YouTube →</a>
     </div>
   </div>
 </section>
@@ -117,10 +120,10 @@ active:
     <span class="eyebrow">Our vision</span>
     <h2 style="max-width:1000px;margin-bottom:44px">A future where every young person can build a successful career through quality education and skills.</h2>
     <div class="grid g4 cards-stack">
-      <a class="card" href="#give"><span class="amount">R1,000</span><p>pays for about a week of one student's training</p><span class="link-arrow">Give R1,000 →</span></a>
-      <a class="card" href="#give"><span class="amount">R2,000</span><p>covers a month of printing and study materials for the class</p><span class="link-arrow">Give R2,000 →</span></a>
-      <a class="card gold" href="#give"><span class="amount">R4,000</span><p>supports one student for a whole month</p><span class="link-arrow">Sponsor a student →</span></a>
-      <a class="card green" href="support-us.html#sponsor"><span class="amount">R1k–R5k</span><p>a month: give as little as R1,000 to R5,000 monthly to help us keep changing the lives of disadvantaged youth in the Valley</p><span class="link-arrow">Become a sponsor →</span></a>
+      <a class="card" href="support-us.html?amount=1000&amp;freq=once#give"><span class="amount">R1,000</span><p>pays for about a week of one student's training</p><span class="link-arrow">Give R1,000 →</span></a>
+      <a class="card" href="support-us.html?amount=2000&amp;freq=once#give"><span class="amount">R2,000</span><p>covers a month of printing and study materials for the class</p><span class="link-arrow">Give R2,000 →</span></a>
+      <a class="card gold" href="support-us.html?amount=4000&amp;freq=monthly#give"><span class="amount">R4,000</span><p>supports one student for a whole month</p><span class="link-arrow">Sponsor a student →</span></a>
+      <a class="card green" href="support-us.html?amount=1000&amp;freq=monthly#give"><span class="amount">R1k–R5k</span><p>a month: give as little as R1,000 to R5,000 monthly to help us keep changing the lives of disadvantaged youth in the Valley</p><span class="link-arrow">Give monthly →</span></a>
     </div>
   </div>
 </section>
