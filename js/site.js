@@ -57,8 +57,19 @@
     var src = wrap.getAttribute('data-video');
     if (!btn || !src) return;
     btn.addEventListener('click', function () {
-      var v = document.createElement('video');
-      v.src = src; v.controls = true; v.autoplay = true; v.playsInline = true;
+      var yt = src.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+      var v;
+      if (yt) {
+        // YouTube link: load the player only when clicked, so the page stays fast
+        v = document.createElement('iframe');
+        v.src = 'https://www.youtube-nocookie.com/embed/' + yt[1] + '?autoplay=1&rel=0';
+        v.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        v.allowFullscreen = true;
+        v.title = btn.getAttribute('aria-label') || 'Video';
+      } else {
+        v = document.createElement('video');
+        v.src = src; v.controls = true; v.autoplay = true; v.playsInline = true;
+      }
       wrap.appendChild(v); btn.remove();
       var cap = wrap.querySelector('.video-caption'); if (cap) cap.remove();
     });
@@ -101,6 +112,6 @@
     entries.forEach(function (e) {
       if (e.isIntersecting) { io.unobserve(e.target); run(e.target); }
     });
-  }, { threshold: 0.6 });
+  }, { threshold: 0, rootMargin: '0px 0px -30% 0px' }); // start once the numbers are 30% up from the bottom of the screen
   nums.forEach(function (el) { io.observe(el); });
 })();
