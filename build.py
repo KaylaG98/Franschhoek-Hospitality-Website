@@ -35,8 +35,7 @@ def header(active, donate_href):
     return f"""<header class="site-header">
   <div class="wrap">
     <a class="brand" href="index.html" aria-label="Franschhoek Hospitality Academy home">
-      <span class="brand-mark">FHA</span>
-      <span class="brand-name"><b>Franschhoek</b><span>Hospitality Academy</span></span>
+      <img class="brand-logo" src="images/logo.png" alt="Franschhoek Hospitality Academy &amp; Learning Centre" width="298" height="143">
     </a>
     <nav class="main-nav" aria-label="Main">
       {links}

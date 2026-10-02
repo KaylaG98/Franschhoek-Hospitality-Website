@@ -73,3 +73,34 @@
     v.pause();
   }
 })();
+
+// Impact numbers: count up from 0 the first time they scroll into view
+(function () {
+  var nums = document.querySelectorAll('.stat b');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!nums.length || reduce || !('IntersectionObserver' in window)) return;
+  var run = function (el) {
+    var text = el.textContent;
+    var m = text.match(/^(\D*)([\d,]+)(.*)$/);
+    if (!m) return;
+    var target = parseInt(m[2].replace(/,/g, ''), 10);
+    var commas = m[2].indexOf(',') > -1;
+    var start = null, dur = 1600;
+    var fmt = function (n) { return commas ? n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : String(n); };
+    var step = function (t) {
+      if (start === null) start = t;
+      var p = Math.min((t - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = m[1] + fmt(Math.round(target * eased)) + m[3];
+      if (p < 1) requestAnimationFrame(step); else el.textContent = text;
+    };
+    el.textContent = m[1] + fmt(0) + m[3];
+    requestAnimationFrame(step);
+  };
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { io.unobserve(e.target); run(e.target); }
+    });
+  }, { threshold: 0.6 });
+  nums.forEach(function (el) { io.observe(el); });
+})();
