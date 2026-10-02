@@ -283,3 +283,14 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .article .ph{min-height:clamp(240px,40vw,440px)}
 .article .quote{margin:24px 0;padding-left:24px;border-left:4px solid var(--gold);font-size:clamp(22px,2.4vw,30px)}
 .article .quote span{display:block;margin-top:10px;font-family:var(--sans);font-size:15px;color:var(--muted)}
+
+/* Header logo */
+.brand-logo{height:68px;width:auto}
+@media (max-width:600px){.brand-logo{height:50px}}
+
+/* Learn / Work / Lead: same-shaped photos so the three columns line up */
+.steps .ph{aspect-ratio:4/3;min-height:0}
+.steps h3{margin-top:4px}
+
+/* Impact numbers count up when scrolled into view (js/site.js) */
+.stat b{font-variant-numeric:tabular-nums}
