@@ -64,3 +64,12 @@
     });
   });
 })();
+
+// Home hero video: stay on the still frame for visitors who have reduced motion switched on
+(function () {
+  var v = document.querySelector('.hero-video');
+  if (v && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    v.removeAttribute('autoplay');
+    v.pause();
+  }
+})();
