@@ -282,3 +282,25 @@
     });
   });
 })();
+
+// About timeline: hovering, focusing or tapping a year shows its story
+(function () {
+  var items = document.querySelectorAll('.tl-item');
+  var show = function (it) { items.forEach(function (x) { x.classList.toggle('is-active', x === it); }); };
+  items.forEach(function (it) {
+    it.addEventListener('mouseenter', function () { show(it); });
+    it.addEventListener('focus', function () { show(it); });
+    it.addEventListener('click', function () { show(it); });
+  });
+})();
+
+// Cards marked .reveal rise into place as they scroll into view
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
+  if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.2 });
+  els.forEach(function (e) { io.observe(e); });
+})();
