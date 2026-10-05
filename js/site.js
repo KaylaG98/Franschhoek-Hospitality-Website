@@ -237,3 +237,19 @@
     });
   });
 })();
+
+// Contact form: pre-choose the topic when a link sends ?topic=... (e.g. from Support Us)
+(function () {
+  var sel = document.getElementById('c-about');
+  if (!sel) return;
+  var topics = {
+    volunteer: ['Volunteering my time', "I'd like to share my skills with the students as a guest lecturer or mentor."],
+    supplies: ['Donating kitchen supplies or stationery', "I'd like to sponsor kitchen supplies for the Academy."],
+    stationery: ['Donating kitchen supplies or stationery', "I'd like to sponsor stationery and printing for the Academy."]
+  };
+  var t = topics[new URLSearchParams(location.search).get('topic')];
+  if (!t) return;
+  sel.value = t[0];
+  var msg = document.getElementById('c-msg');
+  if (msg && !msg.value) msg.value = t[1];
+})();
