@@ -324,3 +324,9 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .split-video img.hq{transform:scale(1.34)} /* YouTube's fallback still has black bars top and bottom: crop them off */
 .split-video::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,12,.6),rgba(10,15,12,.1) 55%);pointer-events:none}
 .split-video .play,.split-video .video-caption{z-index:2}
+
+/* Application form: shorter boxes for short answers */
+.apply .field textarea{min-height:0}
+.apply h3{font-size:22px}
+/* Links that jump to a section stop below the sticky header */
+[id]{scroll-margin-top:100px}

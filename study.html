@@ -65,8 +65,8 @@
 
 <section class="section-sm">
   <div class="wrap grid g4">
-    <div class="stat"><span class="eyebrow" style="margin:0">Applications close</span><b style="font-size:28px">[DATE 2026]</b></div>
-    <div class="stat"><span class="eyebrow" style="margin:0">Course starts</span><b style="font-size:28px">January 2027</b></div>
+    <div class="stat"><span class="eyebrow" style="margin:0">Applications close</span><b style="font-size:28px">30 October 2026</b></div>
+    <div class="stat"><span class="eyebrow" style="margin:0">Course starts</span><b style="font-size:28px">11 January 2027</b></div>
     <div class="stat"><span class="eyebrow" style="margin:0">Hours</span><b style="font-size:28px">Mon–Fri, 8am–5pm</b></div>
     <div class="stat"><span class="eyebrow" style="margin:0">Where</span><b style="font-size:28px">Farm Cabrière, Franschhoek</b></div>
   </div>
@@ -100,8 +100,8 @@
     <div class="grid g4">
       <div class="stack" style="gap:10px"><span class="step-num">1</span><h3>Apply online</h3><p class="muted">Fill in the application form yourself. Tell us about you and the career you want.</p></div>
       <div class="stack" style="gap:10px"><span class="step-num">2</span><h3>Interview</h3><p class="muted">If you're shortlisted, we'll contact you to come in for an interview.</p></div>
-      <div class="stack" style="gap:10px"><span class="step-num">3</span><h3>Secure your place</h3><p class="muted">Pay the registration fee and deposit by [DATE] to confirm your spot.</p></div>
-      <div class="stack" style="gap:10px"><span class="step-num">4</span><h3>Start in January</h3><p class="muted">Classes begin in January 2027 at our home on Farm Cabrière.</p></div>
+      <div class="stack" style="gap:10px"><span class="step-num">3</span><h3>Secure your place</h3><p class="muted">If you're accepted, pay the R1,400 deposit by 31 December 2026 to reserve your spot.</p></div>
+      <div class="stack" style="gap:10px"><span class="step-num">4</span><h3>Start in January</h3><p class="muted">Classes begin on 11 January 2027 at our home on Farm Cabrière and run until 30 September, followed by a four-month work placement.</p></div>
     </div>
   </div>
 </section>
@@ -111,14 +111,14 @@
     <div class="stack">
       <span class="eyebrow" style="margin:0">Fees</span>
       <h2>Quality training at a fraction of the cost.</h2>
-      <p class="lead">Monthly school fees are R1,200.00, due on the 7th of each month.</p>
+      <p class="lead">Monthly school fees are R1,400, due on the 7th of each month. Please make sure you have the full support of your parents or guardians, who are responsible for the fees with you.</p>
     </div>
     <div class="fee-table">
-      <div><span>Registration fee (once-off)</span><b>R2,400</b></div>
-      <div><span>Deposit (due [DATE])</span><b>R1,200</b></div>
-      <div><span>Final payment (first day)</span><b>R1,200</b></div>
-      <div><span>Monthly tuition (due on the 7th)</span><b>R1,200</b></div>
-      <p class="small" style="color:var(--gold-ink);padding:6px 0 14px">2025 fees shown. 2027 fees to be confirmed.</p>
+      <div><span>Registration fee (once-off, if you're selected)</span><b>R2,800</b></div>
+      <div><span>Deposit: half the registration fee, due by 31 December 2026</span><b>R1,400</b></div>
+      <div><span>Balance: due on the first day, 11 January 2027</span><b>R1,400</b></div>
+      <div><span>Monthly school fees (due on the 7th)</span><b>R1,400</b></div>
+      <p class="small" style="color:var(--gold-ink);padding:6px 0 14px">2027 fees. Without the deposit, your place is not guaranteed.</p>
     </div>
   </div>
 </section>
@@ -157,26 +157,59 @@
       <p class="lead">Applying doesn't guarantee a place. Shortlisted applicants are invited for an interview. Please fill in the form yourself.</p>
       <a class="btn btn-outline" href="mailto:shaneill@franschhoekhospitalityacademy.co.za" style="align-self:flex-start">Email us a question</a>
     </div>
-    <form class="card" action="[APPLICATION-FORM-URL]" method="post" style="gap:16px">
+    <form class="card apply" action="[APPLICATION-FORM-URL]" method="post" style="gap:16px">
+      <input type="hidden" name="_subject" value="New 2027 application">
+      <h3>Your details</h3>
       <div class="grid g2" style="gap:14px">
-        <div class="field"><label for="a-name">Full name</label><input id="a-name" name="full_name" required></div>
+        <div class="field"><label for="a-first">First names (as on your ID)</label><input id="a-first" name="first_names" autocomplete="given-name" required></div>
+        <div class="field"><label for="a-surname">Surname</label><input id="a-surname" name="surname" autocomplete="family-name" required></div>
+      </div>
+      <div class="grid g2" style="gap:14px">
+        <div class="field"><label for="a-nick">Nickname (optional)</label><input id="a-nick" name="nickname"></div>
+        <div class="field"><label for="a-gender">Gender</label><select id="a-gender" name="gender" required><option value="">Choose…</option><option>Female</option><option>Male</option><option>Other</option><option>Prefer not to say</option></select></div>
+      </div>
+      <div class="grid g2" style="gap:14px">
         <div class="field"><label for="a-dob">Date of birth</label><input id="a-dob" name="date_of_birth" type="date" required></div>
+        <div class="field"><label for="a-age">Age</label><input id="a-age" name="age" type="number" min="15" max="99" inputmode="numeric" required></div>
+      </div>
+      <div class="field"><label for="a-id">ID number</label><input id="a-id" name="id_number" inputmode="numeric" maxlength="13" required></div>
+      <div class="grid g2" style="gap:14px">
+        <div class="field"><label for="a-phone">Cellphone number</label><input id="a-phone" name="cellphone" type="tel" autocomplete="tel" required></div>
+        <div class="field"><label for="a-relative">Contact number of a relative</label><input id="a-relative" name="relative_phone" type="tel" required></div>
+      </div>
+      <div class="field"><label for="a-email">Email address</label><input id="a-email" name="email" type="email" autocomplete="email"></div>
+      <div class="field"><label for="a-address">Physical address</label><textarea id="a-address" name="physical_address" rows="2" required></textarea></div>
+
+      <h3 style="margin-top:12px">School and work</h3>
+      <div class="grid g2" style="gap:14px">
+        <div class="field"><label for="a-grade">Highest grade passed</label><input id="a-grade" name="highest_grade" required></div>
+        <div class="field"><label for="a-passed">Year passed</label><input id="a-passed" name="year_passed" inputmode="numeric" required></div>
       </div>
       <div class="grid g2" style="gap:14px">
-        <div class="field"><label for="a-phone">Phone / WhatsApp</label><input id="a-phone" name="phone" type="tel" required></div>
-        <div class="field"><label for="a-email">Email</label><input id="a-email" name="email" type="email"></div>
+        <div class="field"><label for="a-school">Name of high school</label><input id="a-school" name="high_school" required></div>
+        <div class="field"><label for="a-town">Town or village where the school is</label><input id="a-town" name="school_town" required></div>
       </div>
-      <div class="field"><label for="a-guardian">Parent or guardian contact number</label><input id="a-guardian" name="guardian_phone" type="tel"></div>
-      <div class="field"><label for="a-address">Where do you live?</label><input id="a-address" name="address"></div>
-      <div class="grid g2" style="gap:14px">
-        <div class="field"><label for="a-grade">Highest grade passed</label><input id="a-grade" name="highest_grade"></div>
-        <div class="field"><label for="a-school">School name</label><input id="a-school" name="school"></div>
-      </div>
-      <div class="field"><label for="a-status">What are you doing now?</label><select id="a-status" name="current_status"><option>Studying</option><option>Working</option><option>Working part-time</option><option>Looking for work</option></select></div>
-      <div class="field"><label for="a-careers">Which hospitality careers interest you most?</label><input id="a-careers" name="careers"></div>
-      <div class="field"><label for="a-why">Tell us about yourself and where you see yourself in 5–10 years</label><textarea id="a-why" name="about_you" required></textarea></div>
-      <label class="small" style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" required style="margin-top:4px"> I completed this form myself and my parent or guardian supports my application.</label>
-      <p class="small muted">We only use your details to process your application.</p>
+      <div class="field"><label for="a-employed">Are you currently employed? Please give details.</label><textarea id="a-employed" name="employment" rows="2" required></textarea></div>
+      <div class="field"><label for="a-quals">What qualifications or experience do you have in hospitality?</label><textarea id="a-quals" name="hospitality_experience" rows="2" required></textarea></div>
+      <div class="field"><label for="a-day">Are you at school, studying, or working part-time or full-time? Tell us what you do day to day.</label><textarea id="a-day" name="day_to_day" rows="3" required></textarea></div>
+      <div class="field"><label for="a-community">Are you involved in any community projects? If yes, tell us about them.</label><textarea id="a-community" name="community_projects" rows="2"></textarea></div>
+
+      <h3 style="margin-top:12px">About you</h3>
+      <fieldset class="field" style="border:0;padding:0;margin:0"><legend style="font-size:14px;font-weight:700;margin-bottom:8px">Three hospitality careers you think you would enjoy most</legend>
+        <div class="grid g3" style="gap:10px">
+          <input name="career_1" aria-label="Career 1" required>
+          <input name="career_2" aria-label="Career 2" required>
+          <input name="career_3" aria-label="Career 3" required>
+        </div>
+      </fieldset>
+      <div class="field"><label for="a-impact">How do you think attending the Franschhoek Hospitality Academy will impact your future?</label><textarea id="a-impact" name="impact_on_future" rows="3" required></textarea></div>
+      <div class="field"><label for="a-about">Describe yourself: your background, the type of person you are, your dreams and ambitions, where you see yourself in the hospitality industry in 5–10 years, and the role models who have influenced you.</label><textarea id="a-about" name="about_you" rows="6" required></textarea></div>
+
+      <h3 style="margin-top:12px">Confirm</h3>
+      <div class="field"><label for="a-guardian">Parent or guardian's full name</label><input id="a-guardian" name="guardian_name" required></div>
+      <label class="small" style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" name="completed_myself" value="yes" required style="margin-top:4px"> I confirm that I completed this form myself.</label>
+      <label class="small" style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" name="guardian_supports" value="yes" required style="margin-top:4px"> My parent or guardian supports my application and understands the fees.</label>
+      <p class="small muted">Applications close on 30 October 2026. We only use your details to process your application.</p>
       <button class="btn btn-gold" type="submit">Submit my application</button>
     </form>
   </div>
