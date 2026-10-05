@@ -441,3 +441,14 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 @media not all and (hover:hover) and (pointer:fine){.hover-hint{display:none}}
 @media (max-width:900px){.team-scroll .person .ph{min-height:0}}
 .amb-list .person-more{padding:14px 14px}.amb-list .person-more p{font-size:14px;line-height:1.45}
+.team-scroll .person-more p{font-size:14px;line-height:1.45}
+/* Description panel opens at full height over the photo (and the cards below) instead of scrolling */
+.person{position:relative}
+.person-more{top:10px;bottom:auto;max-height:none;overflow:visible;z-index:5;opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .3s ease,transform .3s ease,visibility .3s}
+.person:hover .person-more,.person:focus-within .person-more,.person.open .person-more{opacity:1;visibility:visible;transform:none}
+.person:hover,.person.open,.person:focus-within{z-index:6}
+/* Phones and tablets: the description opens underneath the photo and the card grows */
+@media not all and (hover:hover) and (pointer:fine){
+  .person-more{position:static;display:none;opacity:1;visibility:visible;transform:none;box-shadow:none;padding:10px 0 0;background:transparent}
+  .person.open .person-more{display:block}
+}
