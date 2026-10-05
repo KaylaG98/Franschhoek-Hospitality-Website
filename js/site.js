@@ -270,7 +270,15 @@
       fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
         .then(function (r) { return r.json(); })
         .then(function (res) {
-          if (String(res.success) !== 'true') throw new Error(res.message || 'failed');
+          if (String(res.success) !== 'true') {
+            if (/activat/i.test(res.message || '')) {
+              // First message to a new address: FormSubmit emails Shaneill an "Activate Form" link instead of delivering it
+              btn.disabled = false; btn.textContent = label;
+              say('This form is still being switched on, so your message wasn\u2019t delivered. Please email <a href="mailto:shaneill@franschhoekhospitalityacademy.co.za">shaneill@franschhoekhospitalityacademy.co.za</a> or WhatsApp 081 009 5157.');
+              return;
+            }
+            throw new Error(res.message || 'failed');
+          }
           f.reset();
           say('<b>Thank you, your message has been sent.</b> We\u2019ll get back to you soon.');
           btn.textContent = 'Sent';
