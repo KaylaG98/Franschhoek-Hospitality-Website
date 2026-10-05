@@ -312,3 +312,14 @@
   }, { threshold: 0.2 });
   els.forEach(function (e) { io.observe(e); });
 })();
+
+// About: tap a team or ambassador photo to show their description (hover does this on computers)
+(function () {
+  document.querySelectorAll('.person').forEach(function (p) {
+    p.addEventListener('click', function () {
+      var wasOpen = p.classList.contains('open');
+      document.querySelectorAll('.person.open').forEach(function (o) { o.classList.remove('open'); });
+      if (!wasOpen) p.classList.add('open');
+    });
+  });
+})();

@@ -424,3 +424,20 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .objective:hover .obj-num{opacity:1;transform:translateY(-3px)}
 .objective h3{padding-right:0}
 @media (max-width:600px){.objective{padding-top:84px}.obj-num{font-size:60px;left:24px}}
+
+/* About: team and ambassador cards. Photo and name; role and description slide up over the photo
+   on hover or keyboard focus, or on tap (js adds .open) */
+.person{outline:none;cursor:pointer}
+.person .ph{position:relative;overflow:hidden;min-height:0;aspect-ratio:4/5}
+.person .ph img{transition:transform .5s ease}
+.person:hover .ph img,.person.open .ph img{transform:scale(1.04)}
+.person-more{position:absolute;left:10px;right:10px;bottom:10px;z-index:1;background:var(--white);border-radius:12px;padding:16px 18px;max-height:calc(100% - 20px);overflow:auto;transform:translateY(calc(100% + 14px));transition:transform .35s ease;box-shadow:0 8px 24px rgba(23,33,27,.18)}
+.person:hover .person-more,.person:focus-within .person-more,.person.open .person-more{transform:none}
+.person-more .role{margin:0 0 6px}
+.person-more p{margin:0;font-size:15px;line-height:1.5}
+.person:focus-visible .ph{outline:3px solid var(--gold);outline-offset:3px}
+.amb-list .person b{font-size:20px}
+.hover-hint{margin:0 0 4px}
+@media not all and (hover:hover) and (pointer:fine){.hover-hint{display:none}}
+@media (max-width:900px){.team-scroll .person .ph{min-height:0}}
+.amb-list .person-more{padding:14px 14px}.amb-list .person-more p{font-size:14px;line-height:1.45}
