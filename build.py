@@ -1,5 +1,8 @@
 """Builds the FHA site: wraps each page in src/pages with the shared head, header and footer."""
-import os, re
+import os, re, hashlib
+# Version tag for the CSS and JS links: changes whenever those files change,
+# so browsers fetch the new styles straight after each update instead of an old saved copy
+VER = hashlib.md5(open("css/site.css", "rb").read() + open("js/site.js", "rb").read()).hexdigest()[:8]
 SITE = "https://www.franschhoekhospitalityacademy.co.za/"
 OG = "https://static.wixstatic.com/media/feb0d8_d01647c1d4964f90a66865bf96583566f002.jpg"
 NAV = [("our-impact.html","Our Impact"),("study.html","Study With Us"),("support-us.html","Support Us"),("about.html","About"),("academy-diary.html","Academy Diary")]
@@ -21,7 +24,7 @@ def head(title, desc, fname):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/site.css?v={VER}">
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"NGO","name":"Franschhoek Hospitality Academy & Learning Centre","url":"{SITE}","telephone":"+27 60 381 0083","address":{{"@type":"PostalAddress","streetAddress":"Farm Cabrière, Daniel Hugo Street","addressLocality":"Franschhoek","postalCode":"7690","addressCountry":"ZA"}},"sameAs":["https://www.instagram.com/franschhoekhospitality/","https://www.facebook.com/FranschhoekHospitality/"]}}</script>
 </head>
 <body>
@@ -83,7 +86,7 @@ def page_url(path):
 def build(src, out, active, prefix=""):
     meta, body = read_page(src)
     donate = "#give" if 'data-donate' in body else "support-us.html#give"
-    html = head(meta["title"], meta["description"], out) + header(active, donate) + '\n<main id="main">\n' + body + '</main>\n\n' + FOOTER + '<script src="js/site.js"></script>\n</body>\n</html>\n'
+    html = head(meta["title"], meta["description"], out) + header(active, donate) + '\n<main id="main">\n' + body + '</main>\n\n' + FOOTER + f'<script src="js/site.js?v={VER}"></script>\n</body>\n</html>\n'
     if prefix:
         html = relink(html, prefix)
     open(out, "w").write(html)

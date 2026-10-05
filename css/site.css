@@ -335,7 +335,7 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .impact-hero{background:linear-gradient(rgba(34,53,43,.74),rgba(34,53,43,.9)),url(../images/impact-hero.jpg) center 40%/cover no-repeat}
 
 /* Logo boxes that hold a real logo: clean white tile instead of the dashed placeholder */
-.logo-box:has(img){border:1px solid var(--card-line);background:var(--white);padding:14px}
+.logo-box.logo,.logo-box:has(img){border:0;background:transparent;padding:0} /* real logos: no box or dotted outline */
 .logo-box img{max-height:68px;max-width:100%;object-fit:contain}
 .employers{grid-template-columns:repeat(auto-fit,minmax(150px,240px))}
 .employers .logo-box{height:120px}
