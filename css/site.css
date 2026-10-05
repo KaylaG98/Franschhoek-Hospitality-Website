@@ -330,3 +330,14 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .apply h3{font-size:22px}
 /* Links that jump to a section stop below the sticky header */
 [id]{scroll-margin-top:100px}
+
+/* Our Impact heading: photo under a see-through green layer, darker at the bottom where the numbers sit */
+.impact-hero{background:linear-gradient(rgba(34,53,43,.74),rgba(34,53,43,.9)),url(../images/impact-hero.jpg) center 40%/cover no-repeat}
+
+/* Logo boxes that hold a real logo: clean white tile instead of the dashed placeholder */
+.logo-box:has(img){border:1px solid var(--card-line);background:var(--white);padding:14px}
+.logo-box img{max-height:68px;max-width:100%;object-fit:contain}
+.employers{grid-template-columns:repeat(auto-fit,minmax(150px,240px))}
+.employers .logo-box{height:120px}
+.employers .logo-box img{max-height:88px}
+@media (max-width:600px){.employers{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.employers .logo-box{height:92px;padding:8px}.employers .logo-box img{max-height:70px}}
