@@ -313,13 +313,27 @@
   els.forEach(function (e) { io.observe(e); });
 })();
 
-// About: tap a team or ambassador photo to show their description (hover does this on computers)
+// About: clicking or tapping a team or ambassador card opens their full story in a pop-up
 (function () {
   document.querySelectorAll('.person').forEach(function (p) {
-    p.addEventListener('click', function () {
-      var wasOpen = p.classList.contains('open');
-      document.querySelectorAll('.person.open').forEach(function (o) { o.classList.remove('open'); });
-      if (!wasOpen) p.classList.add('open');
-    });
+    var open = function () {
+      var img = p.querySelector('.ph img');
+      var name = p.querySelector('b').textContent;
+      var more = p.querySelector('.person-more');
+      var d = document.createElement('dialog');
+      d.className = 'bio-pop';
+      d.setAttribute('aria-label', name);
+      d.innerHTML = '<button class="bio-pop-close" aria-label="Close">&times;</button><div class="bio-pop-inner">' +
+        '<img src="' + img.getAttribute('src') + '" alt="' + img.alt + '" style="object-position:' + (img.style.objectPosition || '50% 25%') + '">' +
+        '<div class="bio-pop-text"><h3></h3>' + more.innerHTML + '</div></div>';
+      d.querySelector('h3').textContent = name;
+      document.body.appendChild(d);
+      d.querySelector('.bio-pop-close').addEventListener('click', function () { d.close(); });
+      d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
+      d.addEventListener('close', function () { d.remove(); p.focus(); });
+      d.showModal();
+    };
+    p.addEventListener('click', open);
+    p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
   });
 })();
