@@ -338,3 +338,29 @@
     p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
   });
 })();
+
+// Academy Diary: filter posts by category
+(function () {
+  var btns = document.querySelectorAll('[data-filter]');
+  if (!btns.length) return;
+  var items = document.querySelectorAll('[data-cat]');
+  var empty = document.querySelector('.diary-empty');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.dataset.filter, shown = 0;
+      btns.forEach(function (x) {
+        var on = x === b;
+        x.setAttribute('aria-pressed', String(on));
+        x.classList.toggle('btn-ink', on);
+        x.classList.toggle('btn-outline', !on);
+      });
+      items.forEach(function (it) {
+        var show = f === 'all' || it.dataset.cat === f;
+        it.hidden = !show;
+        if (it.id === 'featured') it.closest('section').hidden = !show; // no empty gap where the featured post was
+        if (show) shown++;
+      });
+      if (empty) empty.hidden = shown > 0;
+    });
+  });
+})();

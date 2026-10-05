@@ -499,3 +499,14 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .post-gallery figcaption{font-size:14px;color:var(--muted);margin-top:8px}
 @media (max-width:600px){.post-gallery{grid-template-columns:1fr}}
 .post-gallery.wide .ph{aspect-ratio:3/2}
+
+/* Our Impact: graduate story card */
+.grad-story{color:var(--ink)}
+.grad-quote{margin:4px 0 6px;padding-left:18px;border-left:4px solid var(--gold);font-size:clamp(20px,1.9vw,26px);line-height:1.3}
+/* Academy Diary filters */
+.diary-filters .btn{min-height:40px;padding:8px 18px;cursor:pointer}
+.diary-empty{grid-column:1/-1}
+[hidden]{display:none!important}
+.diary-filters .btn{font-family:var(--sans)}
+.diary-filters .btn-outline{background:transparent}
+.diary-filters .btn-ink{background:var(--ink);color:var(--white);border-color:var(--ink)}

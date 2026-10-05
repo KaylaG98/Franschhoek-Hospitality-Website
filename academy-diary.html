@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="css/site.css?v=e9f34386">
+<link rel="stylesheet" href="css/site.css?v=bf44477f">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"NGO","name":"Franschhoek Hospitality Academy & Learning Centre","url":"https://www.franschhoekhospitalityacademy.co.za/","telephone":"+27 60 381 0083","address":{"@type":"PostalAddress","streetAddress":"Farm Cabrière, Daniel Hugo Street","addressLocality":"Franschhoek","postalCode":"7690","addressCountry":"ZA"},"sameAs":["https://www.instagram.com/franschhoekhospitality/","https://www.facebook.com/FranschhoekHospitality/"]}</script>
 </head>
 <body>
@@ -53,19 +53,19 @@
   <div class="wrap">
     <span class="eyebrow">Academy Diary</span>
     <h1 style="font-size:clamp(32px,4.4vw,60px);margin-bottom:28px">News, stories and life at the Academy.</h1>
-    <div class="row" style="gap:10px">
-      <a class="btn btn-ink" href="#" style="min-height:40px;padding:8px 18px">All</a>
-      <a class="btn btn-outline" href="#" style="min-height:40px;padding:8px 18px">Monthly updates</a>
-      <a class="btn btn-outline" href="#" style="min-height:40px;padding:8px 18px">Student stories</a>
-      <a class="btn btn-outline" href="#" style="min-height:40px;padding:8px 18px">Events</a>
-      <a class="btn btn-outline" href="#" style="min-height:40px;padding:8px 18px">Partners</a>
+    <div class="row diary-filters" role="group" aria-label="Filter posts" style="gap:10px">
+      <button type="button" class="btn btn-ink" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="btn btn-outline" data-filter="monthly" aria-pressed="false">Monthly updates</button>
+      <button type="button" class="btn btn-outline" data-filter="students" aria-pressed="false">Student stories</button>
+      <button type="button" class="btn btn-outline" data-filter="events" aria-pressed="false">Events</button>
+      <button type="button" class="btn btn-outline" data-filter="partners" aria-pressed="false">Partners</button>
     </div>
   </div>
 </section>
 
 <section class="section-sm">
   <div class="wrap">
-    <a class="card featured" href="diary/2026-10-beverage-training-excursions.html" id="featured">
+    <a class="card featured" data-cat="monthly" href="diary/2026-10-beverage-training-excursions.html" id="featured">
       <div class="ph" style="border-radius:0;min-height:420px"><img src="images/diary/2026-10-cape-brewing-group.jpg" alt="Academy students outside Cape Brewing Company" style="object-position:50% 40%"></div>
       <div class="stack" style="padding:48px;justify-content:center">
         <span class="post-meta">Latest · Monthly update · October 2026</span>
@@ -79,9 +79,10 @@
 
 <section class="section-sm">
   <div class="wrap grid g3">
-    <a class="post" href="diary/2026-02-class-of-2025-graduation.html"><div class="ph"><img src="images/diary/2026-02-graduation-class.jpg" alt=""></div><span class="post-meta">Events · February 2026</span><span class="post-title">Congratulations, Class of 2025</span></a>
-    <a class="post" href="diary/2025-12-prince-albert-partnership.html"><div class="ph"><img src="images/impact-hero.jpg" alt=""></div><span class="post-meta">Partners · December 2025</span><span class="post-title">Our training comes to the Karoo through a partnership in Prince Albert</span></a>
-    <a class="post" href="our-impact.html"><div class="ph"><img src="https://static.wixstatic.com/media/feb0d8_d01647c1d4964f90a66865bf96583566f000.jpg" alt=""></div><span class="post-meta">Events</span><span class="post-title">Watch: our latest graduation film</span></a>
+    <a class="post" data-cat="events" href="diary/2026-02-class-of-2025-graduation.html"><div class="ph"><img src="images/diary/2026-02-graduation-class.jpg" alt=""></div><span class="post-meta">Events · February 2026</span><span class="post-title">Congratulations, Class of 2025</span></a>
+    <a class="post" data-cat="partners" href="diary/2025-12-prince-albert-partnership.html"><div class="ph"><img src="images/diary/2025-12-prince-albert.jpg" alt="" style="object-position:55% 30%"></div><span class="post-meta">Partners · December 2025</span><span class="post-title">Our training comes to the Karoo through a partnership in Prince Albert</span></a>
+    <a class="post" data-cat="students" href="our-impact.html#stories"><div class="ph"><img src="images/shaandre.jpg" alt="" style="object-position:58% 30%"></div><span class="post-meta">Student stories · Where are they now?</span><span class="post-title">Shaandre, Class of 2018: from runner to hospitality supervisor at Plaisir</span></a>
+    <p class="muted diary-empty" hidden>No posts in this category yet. Check back soon.</p>
   </div>
 </section>
 
@@ -131,6 +132,6 @@
     <div class="foot-bottom">© 2026 Franschhoek Hospitality Academy &amp; Learning Centre</div>
   </div>
 </footer>
-<script src="js/site.js?v=e9f34386"></script>
+<script src="js/site.js?v=bf44477f"></script>
 </body>
 </html>
