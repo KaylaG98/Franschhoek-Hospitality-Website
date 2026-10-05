@@ -246,7 +246,8 @@
     volunteer: ['Volunteering my time', "I'd like to share my skills with the students as a guest lecturer or mentor."],
     supplies: ['Donating kitchen supplies or stationery', "I'd like to sponsor kitchen supplies for the Academy."],
     stationery: ['Donating kitchen supplies or stationery', "I'd like to sponsor stationery and printing for the Academy."],
-    sponsor: ['Sponsorship or partnership', '']
+    sponsor: ['Sponsorship or partnership', ''],
+    ambassador: ['Becoming an ambassador', "I'd like to find out about becoming an ambassador for the Academy."]
   };
   var t = topics[new URLSearchParams(location.search).get('topic')];
   if (!t) return;
