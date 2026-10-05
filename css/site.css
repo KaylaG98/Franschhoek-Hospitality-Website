@@ -516,3 +516,5 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .skills .chip::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:12px;vertical-align:middle;transition:transform .25s ease}
 .skills .chip:hover{background:var(--green);color:var(--white);border-color:var(--green);transform:translateY(-3px);box-shadow:0 10px 24px rgba(23,33,27,.14)}
 .skills .chip:hover::before{transform:scale(1.5)}
+.logo-name{font-family:var(--serif);font-weight:600;font-size:24px;color:var(--ink);letter-spacing:.02em}
+.logo-strip .logo-name{font-size:22px;color:var(--muted)}
