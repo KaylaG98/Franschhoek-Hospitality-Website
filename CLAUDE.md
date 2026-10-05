@@ -57,7 +57,9 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 - Charitable Trust IT000107/2017(C) · registered PBO · Section 18A certificates.
 - Address: Farm Cabrière, Daniel Hugo Street, Franschhoek 7690 · +27 60 381 0083 · Admissions: Shaneill Jefthas, 081 009 5157, shaneill@franschhoekhospitalityacademy.co.za · Donations: michaela@franschhoekhospitalityacademy.co.za (Kayla to confirm this mailbox exists).
 - SnapScan: https://pos.snapscan.io/qr/XSVFnKWE · PayPal: https://www.paypal.com/donate/?hosted_button_id=X4SWXWH5K4P5E · EFT: ABSA, account 4091772620, branch 632005, Swift ABSAZAJJ, reference name + surname.
-- Programme: 9 months full-time (Jan–Sep), Mon–Fri 8am–5pm, then a 4-month work placement. Fees shown are 2025 (registration R2,400, deposit R1,200, final payment R1,200, monthly R1,200). 2027 fees to be confirmed.
+- Programme: 9 months full-time (11 Jan – 30 Sep 2027), Mon–Fri 8am–5pm, then a 4-month work placement. 2027 applications close 30 October 2026. 2027 fees (from the official application form): registration R2,800 once-off if selected, paid as a R1,400 deposit by 31 Dec 2026 plus R1,400 on 11 Jan 2027; monthly fees R1,400 due on the 7th.
+- Home page student story: Shaandre, Class of 2018, hospitality supervisor at Plaisir (interview: https://youtu.be/7DpkWPbGEUw). Graduation film is the 2024 graduation.
+- Donations: SnapScan is once-off; the donate boxes open SnapScan in a new tab with the amount pre-filled (`?amount=` in cents). Monthly giving goes to the stop-order steps at `support-us.html#monthly`.
 - Social: instagram.com/franschhoekhospitality · facebook.com/FranschhoekHospitality
 
 ## To-do list (in order)

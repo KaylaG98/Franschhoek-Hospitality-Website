@@ -41,9 +41,19 @@
         b.textContent = fmt(n) + (state.monthly ? '/mo' : '');
         b.setAttribute('aria-pressed', String(n === state.amount && !(other && other.value)));
       });
-      note.textContent = impactFor(state.amount) + (state.monthly && state.amount ? ' Every month.' : '');
-      cta.textContent = state.amount ? 'Give ' + fmt(state.amount) + (state.monthly ? ' a month' : '') : 'Donate';
-      cta.href = SNAPSCAN;
+      note.textContent = impactFor(state.amount) + (state.monthly && state.amount ? ' Every month, set up as a bank stop order.' : '');
+      if (state.monthly) {
+        // SnapScan is once-off only, so monthly gifts go to the stop-order steps on Support Us
+        cta.textContent = state.amount ? 'Set up ' + fmt(state.amount) + ' a month' : 'Give monthly';
+        cta.href = (location.pathname.indexOf('support-us') > -1 ? '' : 'support-us.html') + '#monthly';
+        cta.removeAttribute('target');
+      } else {
+        // Open SnapScan in a new tab with the amount filled in (SnapScan takes the amount in cents)
+        cta.textContent = state.amount ? 'Give ' + fmt(state.amount) + ' now' : 'Donate';
+        cta.href = SNAPSCAN + (state.amount ? '?amount=' + Math.round(state.amount * 100) : '');
+        cta.target = '_blank';
+        cta.rel = 'noopener';
+      }
     }
     freqBtns.forEach(function (b) {
       b.addEventListener('click', function () { state.monthly = b.dataset.freq === 'monthly'; render(); });
@@ -95,10 +105,25 @@
 // Home hero video: stay on the still frame for visitors who have reduced motion switched on
 (function () {
   var v = document.querySelector('.hero-video');
-  if (v && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (!v) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     v.removeAttribute('autoplay');
     v.pause();
+    return;
   }
+  // Some phones (e.g. iPhones in Low Power Mode) block autoplay: start it on the first touch or scroll instead
+  v.muted = true;
+  var kick = function () {
+    var p = v.play();
+    if (p && p.catch) p.catch(function () {});
+  };
+  kick();
+  ['touchstart', 'scroll', 'click'].forEach(function (ev) {
+    window.addEventListener(ev, function once() {
+      if (v.paused) kick();
+      window.removeEventListener(ev, once);
+    }, { passive: true });
+  });
 })();
 
 // Impact numbers: count up every time they scroll into view
