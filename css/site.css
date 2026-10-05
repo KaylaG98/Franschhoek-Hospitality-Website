@@ -498,3 +498,4 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .post-gallery .ph{aspect-ratio:3/4;min-height:0}
 .post-gallery figcaption{font-size:14px;color:var(--muted);margin-top:8px}
 @media (max-width:600px){.post-gallery{grid-template-columns:1fr}}
+.post-gallery.wide .ph{aspect-ratio:3/2}
