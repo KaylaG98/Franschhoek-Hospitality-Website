@@ -202,3 +202,38 @@
     });
   });
 })();
+
+// Newsletter sign-up boxes: send the email to MailerLite without leaving the page
+(function () {
+  document.querySelectorAll('form[data-mailerlite]').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = f.querySelector('button[type="submit"]');
+      var note = f.nextElementSibling && f.nextElementSibling.classList.contains('form-note') ? f.nextElementSibling : null;
+      if (!note) {
+        note = document.createElement('p');
+        note.className = 'form-note';
+        note.setAttribute('role', 'status');
+        f.insertAdjacentElement('afterend', note);
+      }
+      var done = function () {
+        f.reset();
+        note.textContent = 'Thank you! Please check your inbox and click the link to confirm your sign-up.';
+        btn.disabled = false; btn.textContent = 'Sign up';
+      };
+      var fail = function () {
+        note.textContent = 'Sorry, that didn\u2019t work. Please check your email address and try again.';
+        btn.disabled = false; btn.textContent = 'Sign up';
+      };
+      btn.disabled = true; btn.textContent = 'Signing up…';
+      var data = new FormData(f);
+      fetch(f.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (res) { if (res && res.success === false) fail(); else done(); })
+        .catch(function () {
+          // If the browser can't read MailerLite's reply, send it anyway; MailerLite still records the sign-up
+          fetch(f.action, { method: 'POST', body: data, mode: 'no-cors' }).then(done, fail);
+        });
+    });
+  });
+})();

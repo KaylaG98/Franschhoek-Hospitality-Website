@@ -40,10 +40,10 @@ description: Monthly news, student stories and events from the Franschhoek Hospi
 <section class="section">
   <div class="wrap">
     <div class="card green" style="flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap;padding:56px 64px;gap:28px">
-      <div class="stack" style="gap:10px;max-width:620px"><h2 style="color:#fff">Get the Diary in your inbox every month.</h2><p>One email a month. See what your support makes possible.</p></div>
-      <form class="news-form" action="[NEWSLETTER-FORM-URL]" method="post" style="min-width:min(100%,440px)">
+      <div class="stack" style="gap:10px;max-width:620px"><h2 style="color:#fff">Get the Diary in your inbox every month.</h2><p>One email a month. See what your support makes possible. Unsubscribe any time.</p></div>
+      <form class="news-form" action="https://assets.mailerlite.com/jsonp/2685740/forms/200481717392246168/subscribe" method="post" data-mailerlite style="min-width:min(100%,440px)"><input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true">
         <label class="skip" for="diary-email">Email address</label>
-        <input id="diary-email" type="email" name="email" placeholder="you@example.com" required>
+        <input id="diary-email" type="email" name="fields[email]" placeholder="you@example.com" autocomplete="email" required>
         <button class="btn btn-gold" type="submit">Sign up</button>
       </form>
     </div>
