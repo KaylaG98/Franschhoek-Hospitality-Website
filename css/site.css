@@ -155,7 +155,7 @@ p{margin:0}
 
 /* Logos */
 .logo-strip{display:flex;flex-wrap:wrap;justify-content:center;gap:20px 52px;align-items:center;font-family:var(--serif);font-weight:600;font-size:22px;color:var(--muted)}
-.logo-strip img{height:56px;width:auto;object-fit:contain;filter:grayscale(1);opacity:.8}
+.logo-strip img{height:56px;width:auto;object-fit:contain;mix-blend-mode:multiply}
 .logo-tile{background:var(--white);border:1px solid var(--card-line);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 .logo-box{width:100%;height:96px;border:1px dashed #CFC5B2;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:20px;color:var(--muted)}
 .logo-box img{max-height:76px;width:auto}
@@ -302,3 +302,25 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .split-video{border-radius:0;aspect-ratio:auto;min-height:100%}
 .split-video img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 @media (max-width:900px){.split-video{aspect-ratio:16/9;min-height:0}}
+
+/* Sponsor logos in full colour; white logo backgrounds blend into the page */
+.logo-box img{mix-blend-mode:multiply}
+
+/* Header goes slightly see-through once you scroll */
+.site-header{transition:background-color .25s ease, box-shadow .25s ease}
+.site-header.scrolled{background:rgba(246,241,231,.82);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 2px 16px rgba(23,33,27,.08)}
+
+/* Pop-up video player */
+.video-pop{width:min(1100px,92vw);max-width:none;padding:0;border:0;background:transparent;overflow:visible}
+.video-pop::backdrop{background:rgba(10,15,12,.85)}
+.video-pop-frame{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:#000}
+.video-pop-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-pop-close{position:absolute;top:-48px;right:0;width:40px;height:40px;border:0;border-radius:50%;background:var(--white);color:var(--ink);font-size:26px;line-height:1;cursor:pointer}
+
+/* Sign-up box: keep "Sign up" on one line; message shown while forms aren't connected */
+.news-form .btn{white-space:nowrap}
+.form-note{margin:12px 0 0;font-size:15px;color:inherit}
+.site-footer .form-note a,.card.green .form-note a{color:var(--gold)}
+.split-video img.hq{transform:scale(1.34)} /* YouTube's fallback still has black bars top and bottom: crop them off */
+.split-video::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,12,.6),rgba(10,15,12,.1) 55%);pointer-events:none}
+.split-video .play,.split-video .video-caption{z-index:2}
