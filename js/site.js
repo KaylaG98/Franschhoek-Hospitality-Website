@@ -281,7 +281,7 @@
             throw new Error(res.message || 'failed');
           }
           f.reset();
-          say('<b>Thank you, your message has been sent.</b> We\u2019ll get back to you soon.');
+          say(f.classList.contains('apply') ? '<b>Thank you, your application has been sent.</b> Shortlisted applicants will be contacted for an interview.' : '<b>Thank you, your message has been sent.</b> We\u2019ll get back to you soon.');
           btn.textContent = 'Sent';
         })
         .catch(function () {

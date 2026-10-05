@@ -492,3 +492,9 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 /* Footer contact button */
 .foot-contact{margin-top:16px;align-self:flex-start}
 .site-footer .btn-gold{color:var(--ink);text-decoration:none}
+/* Academy Diary post: photo pairs with captions */
+.post-gallery{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0}
+.post-gallery figure{margin:0}
+.post-gallery .ph{aspect-ratio:3/4;min-height:0}
+.post-gallery figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+@media (max-width:600px){.post-gallery{grid-template-columns:1fr}}
