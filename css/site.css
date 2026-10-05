@@ -481,3 +481,7 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
   .mobile-nav a{padding:14px 4px;font-size:18px;font-weight:600;text-decoration:none;border-bottom:1px solid var(--line)}
   .mobile-nav .btn{margin-top:12px}
 }
+/* White cards inside green sections keep dark headings (they were white on white) */
+.bg-green .card:not(.green) h3{color:var(--ink)}
+#collaborations .logo-box{height:110px}
+#collaborations .logo-box img{max-height:100px}
