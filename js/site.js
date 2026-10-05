@@ -55,6 +55,21 @@
     render();
   });
 
+  // Pop-up YouTube player
+  function openVideo(id, title) {
+    var d = document.createElement('dialog');
+    d.className = 'video-pop';
+    d.innerHTML = '<button class="video-pop-close" aria-label="Close video">&times;</button>' +
+      '<div class="video-pop-frame"><iframe src="https://www.youtube-nocookie.com/embed/' + id +
+      '?autoplay=1&rel=0&modestbranding=1" title="' + title.replace(/"/g, '') + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>';
+    document.body.appendChild(d);
+    var close = function () { d.close(); };
+    d.querySelector('.video-pop-close').addEventListener('click', close);
+    d.addEventListener('click', function (e) { if (e.target === d) close(); });
+    d.addEventListener('close', function () { d.remove(); }); // stops the video
+    d.showModal();
+  }
+
   // Video placeholders: play the file when a source is set
   document.querySelectorAll('[data-video]').forEach(function (wrap) {
     var btn = wrap.querySelector('.play');
@@ -64,12 +79,9 @@
       var yt = src.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
       var v;
       if (yt) {
-        // YouTube link: load the player only when clicked, so the page stays fast
-        v = document.createElement('iframe');
-        v.src = 'https://www.youtube-nocookie.com/embed/' + yt[1] + '?autoplay=1&rel=0';
-        v.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-        v.allowFullscreen = true;
-        v.title = btn.getAttribute('aria-label') || 'Video';
+        // YouTube link: play in a pop-up player at the video's own shape; loaded only when clicked
+        openVideo(yt[1], btn.getAttribute('aria-label') || 'Video');
+        return;
       } else {
         v = document.createElement('video');
         v.src = src; v.controls = true; v.autoplay = true; v.playsInline = true;
@@ -89,20 +101,22 @@
   }
 })();
 
-// Impact numbers: count up from 0 the first time they scroll into view
+// Impact numbers: count up every time they scroll into view
 (function () {
   var nums = document.querySelectorAll('.stat b');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!nums.length || reduce || !('IntersectionObserver' in window)) return;
   var run = function (el) {
-    var text = el.textContent;
+    var text = el.dataset.final;
     var m = text.match(/^(\D*)([\d,]+)(.*)$/);
     if (!m) return;
     var target = parseInt(m[2].replace(/,/g, ''), 10);
     var commas = m[2].indexOf(',') > -1;
+    var token = el.dataset.run = String(Number(el.dataset.run || 0) + 1);
     var start = null, dur = 1600;
     var fmt = function (n) { return commas ? n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : String(n); };
     var step = function (t) {
+      if (el.dataset.run !== token) return; // a newer run took over
       if (start === null) start = t;
       var p = Math.min((t - start) / dur, 1);
       var eased = 1 - Math.pow(1 - p, 3);
@@ -112,10 +126,54 @@
     el.textContent = m[1] + fmt(0) + m[3];
     requestAnimationFrame(step);
   };
-  var io = new IntersectionObserver(function (entries) {
+  // Count once the numbers are 30% up from the bottom of the screen...
+  var zone = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
-      if (e.isIntersecting) { io.unobserve(e.target); run(e.target); }
+      if (e.isIntersecting && e.target.dataset.armed === '1') { e.target.dataset.armed = '0'; run(e.target); }
     });
-  }, { threshold: 0, rootMargin: '0px 0px -30% 0px' }); // start once the numbers are 30% up from the bottom of the screen
-  nums.forEach(function (el) { io.observe(el); });
+  }, { threshold: 0, rootMargin: '0px 0px -30% 0px' });
+  // ...and get ready to count again once they have scrolled fully off screen
+  var away = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) {
+        e.target.dataset.run = String(Number(e.target.dataset.run || 0) + 1);
+        e.target.textContent = e.target.dataset.final;
+        e.target.dataset.armed = '1';
+      }
+    });
+  });
+  nums.forEach(function (el) {
+    el.dataset.final = el.textContent;
+    el.dataset.armed = '1';
+    zone.observe(el);
+    away.observe(el);
+  });
+})();
+
+// Header: slightly see-through once the page is scrolled
+(function () {
+  var h = document.querySelector('.site-header');
+  if (!h) return;
+  var update = function () { h.classList.toggle('scrolled', window.scrollY > 10); };
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+// Forms that are not connected to a sign-up service yet: show a message instead of an error page
+(function () {
+  document.querySelectorAll('form[action^="["]').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (f.querySelector('.form-note')) return;
+      var news = f.classList.contains('news-form');
+      var to = news || f.action.indexOf('CONTACT') > -1 ? 'michaela' : 'shaneill';
+      var p = document.createElement('p');
+      p.className = 'form-note';
+      p.setAttribute('role', 'status');
+      p.innerHTML = (news ? 'Online sign-up is coming soon. To get the Academy Diary now, email '
+                          : 'This form is not switched on yet. Please email ') +
+        '<a href="mailto:' + to + '@franschhoekhospitalityacademy.co.za">' + to + '@franschhoekhospitalityacademy.co.za</a>.';
+      f.insertAdjacentElement(news ? 'afterend' : 'beforeend', p);
+    });
+  });
 })();
