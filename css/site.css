@@ -342,3 +342,4 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .employers .logo-box img{max-height:88px}
 @media (max-width:600px){.employers{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.employers .logo-box{height:92px;padding:8px}.employers .logo-box img{max-height:70px}}
 .news-small{margin:10px 0 0;color:var(--on-dark);opacity:.8}
+.qr{width:160px;height:160px;border-radius:12px;border:1px solid var(--card-line);background:#fff;padding:6px}
