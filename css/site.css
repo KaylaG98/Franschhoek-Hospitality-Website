@@ -374,3 +374,48 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
   .help-card-myschool>img{height:auto;width:calc(100% - 40px);margin:20px 20px 0;inset:auto}
   .help-card h3{padding-top:20px}
 }
+
+/* About: interactive milestones timeline (hover, focus or tap a year) */
+.tl-hint{color:var(--on-dark);opacity:.8;margin:0 0 36px}
+.timeline{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;position:relative}
+.timeline::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:rgba(242,182,50,.35)}
+.tl-item{position:relative;padding-top:40px;cursor:pointer;outline:none}
+.tl-dot{position:absolute;top:0;left:0;width:20px;height:20px;border-radius:50%;background:var(--green);border:2px solid var(--gold);transition:background .25s ease,transform .25s ease}
+.tl-year{display:block;font-family:var(--serif);font-weight:600;font-size:clamp(34px,3.6vw,52px);line-height:1;color:rgba(255,255,255,.55);transition:color .25s ease}
+.tl-text{margin:14px 0 0;color:var(--on-dark);max-width:340px;opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease}
+.tl-item.is-active .tl-dot,.tl-item:focus-visible .tl-dot{background:var(--gold);transform:scale(1.25)}
+.tl-item.is-active .tl-year{color:var(--white)}
+.tl-item.is-active .tl-text{opacity:1;transform:none}
+.tl-item:focus-visible .tl-year{text-decoration:underline;text-decoration-color:var(--gold)}
+@media (max-width:900px){
+  .timeline{grid-template-columns:1fr;gap:26px;padding-left:36px}
+  .timeline::before{left:9px;right:auto;top:0;bottom:0;width:2px;height:auto}
+  .tl-item{padding-top:0}
+  .tl-dot{left:-36px;top:6px}
+  .tl-text{opacity:1;transform:none} /* phones: every story shows */
+}
+
+/* About: vision and values over a photo, under a see-through cream layer */
+.vision-band{background:linear-gradient(rgba(246,241,231,.88),rgba(246,241,231,.92)),url(../images/about-vision.jpg) center 35%/cover no-repeat}
+.values{list-style:none;margin:0;padding:0}
+.values li{position:relative;font-family:var(--serif);font-weight:600;font-size:26px;padding:14px 0 14px 0;border-bottom:1px solid var(--line);cursor:default;outline:none;transition:padding .25s ease,color .25s ease,background-color .25s ease}
+.values li:last-child{border-bottom:0}
+.values li::before{content:"";position:absolute;left:0;top:50%;width:0;height:3px;background:var(--gold);transform:translateY(-50%);transition:width .25s ease}
+.values li:hover,.values li:focus-visible{padding-left:36px;color:var(--gold-ink);background:rgba(255,255,255,.55)}
+.values li:hover::before,.values li:focus-visible::before{width:22px}
+
+/* About: objectives cards (big faint number, gold bar, lift on hover, rise in on scroll) */
+.objective{position:relative;overflow:hidden;padding:36px;border-top:4px solid var(--gold);transition:transform .3s ease,box-shadow .3s ease}
+.objective:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(23,33,27,.12)}
+.obj-num{position:absolute;right:18px;top:-18px;font-family:var(--serif);font-weight:700;font-size:150px;line-height:1;color:var(--gold);opacity:.12;pointer-events:none;transition:opacity .3s ease,transform .3s ease}
+.objective:hover .obj-num{opacity:.22;transform:translateY(6px)}
+.objective h3,.objective p,.objective .step-num{position:relative}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+.reveal.in:nth-child(2){transition-delay:.15s}
+.objective.reveal.in:hover{transform:translateY(-6px);transition-delay:0s}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+.obj-num{font-size:110px;top:-12px;right:14px}
+.objective h3{padding-right:96px}
+@media (max-width:900px){.tl-hint{display:none}.tl-year{color:var(--white)}.timeline{margin-top:24px}}
+@media (max-width:600px){.objective h3{padding-right:56px}.obj-num{font-size:80px}}
