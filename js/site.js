@@ -253,3 +253,32 @@
   var msg = document.getElementById('c-msg');
   if (msg && !msg.value) msg.value = t[1];
 })();
+
+// Contact form: sent to Shaneill's inbox through FormSubmit (formsubmit.co), without leaving the page
+(function () {
+  document.querySelectorAll('form[data-formsubmit]').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = f.querySelector('button[type="submit"]');
+      var label = btn.textContent;
+      var say = function (html) {
+        var n = f.querySelector('.form-note');
+        if (!n) { n = document.createElement('p'); n.className = 'form-note'; n.setAttribute('role', 'status'); f.appendChild(n); }
+        n.innerHTML = html;
+      };
+      btn.disabled = true; btn.textContent = 'Sending…';
+      fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (String(res.success) !== 'true') throw new Error(res.message || 'failed');
+          f.reset();
+          say('<b>Thank you, your message has been sent.</b> We\u2019ll get back to you soon.');
+          btn.textContent = 'Sent';
+        })
+        .catch(function () {
+          btn.disabled = false; btn.textContent = label;
+          say('Sorry, your message didn\u2019t send. Please email <a href="mailto:shaneill@franschhoekhospitalityacademy.co.za">shaneill@franschhoekhospitalityacademy.co.za</a> or WhatsApp 081 009 5157.');
+        });
+    });
+  });
+})();
