@@ -29,9 +29,10 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 - `.nojekyll`: stops GitHub Pages from processing the files.
 - `src/diary/YYYY-MM-slug.html`: Academy Diary posts, built to `diary/`. Copy `src/diary/_TEMPLATE.html` (files starting with `_` are not built). Write links as if the post sat at the root (`study.html`); `build.py` adds the `../`.
 - `build.py` also writes the redirect pages for old Wix addresses (`REDIRECTS`, e.g. `apply-now.html`) and `sitemap.xml`. Don't edit those by hand.
+- Top menu: `NAV` in `build.py`; `SUBNAV` adds dropdowns (About → About us, Partners & sponsors). Links to other websites get `target="_blank"` automatically at build time.
 - `MONTHLY-CHECKLIST.md`: what Kayla sends each month and what Claude does with it.
 
-### Pages (7)
+### Pages (8)
 
 | File | Page | Notes |
 | --- | --- | --- |
@@ -41,7 +42,8 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 | about.html | About | Story, milestones, vision, values, objectives, team (swipe carousel on phones), ambassadors (Reuben video + click-to-open bios), governance |
 | our-impact.html | Our Impact | Numbers, employer logos, graduate stories, film, donate band |
 | academy-diary.html | Academy Diary | Featured post, filters, post grid, newsletter (blog listing, built by hand) |
-| partners-contact.html | Partners & Contact | Sponsor logo grid, Collaborations (FRANCO, Hospice Franschhoek), contact details, map, contact form |
+| partners.html | Partners & Sponsors | Sponsor logo grid, Collaborations (FRANCO, Hospice Franschhoek), partner call to action. In the menu under About |
+| contact.html | Contact Us | Contact details, map, contact form (`?topic=volunteer|supplies|stationery|sponsor` pre-chooses the topic). Linked from the footer button and phone menu |
 
 ## Design system
 
@@ -60,7 +62,7 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 - Programme: 9 months full-time (11 Jan – 30 Sep 2027), Mon–Fri 8am–5pm, then a 4-month work placement. 2027 applications close 30 October 2026. 2027 fees (from the official application form): registration R2,800 once-off if selected, paid as a R1,400 deposit by 31 Dec 2026 plus R1,400 on 11 Jan 2027; monthly fees R1,400 due on the 7th.
 - Home page student story: Shaandre, Class of 2018, hospitality supervisor at Plaisir (interview: https://youtu.be/7DpkWPbGEUw). Graduation film is the 2024 graduation.
 - Donations: SnapScan is once-off; the donate boxes open SnapScan in a new tab with the amount pre-filled (`?amount=` in cents). Monthly giving goes to the stop-order steps at `support-us.html#monthly`.
-- Forms: the newsletter boxes post to MailerLite (Academy Diary group, double opt-in). The Partners & Contact form posts to FormSubmit (`formsubmit.co/ajax/<email>`). **Temporarily set to Kayla's test address (kelz.blewett@gmail.com); switch it to shaneill@franschhoekhospitalityacademy.co.za when Kayla says testing is done.** Each new address needs a one-time FormSubmit activation click. The application form is still a placeholder.
+- Forms: the newsletter boxes post to MailerLite (Academy Diary group, double opt-in). The Contact page form posts to FormSubmit (`formsubmit.co/ajax/<email>`). **Temporarily set to Kayla's test address (kelz.blewett@gmail.com); switch it to shaneill@franschhoekhospitalityacademy.co.za when Kayla says testing is done.** Each new address needs a one-time FormSubmit activation click. The application form is still a placeholder.
 - Social: instagram.com/franschhoekhospitality · facebook.com/FranschhoekHospitality
 
 ## To-do list (in order)

@@ -5,7 +5,9 @@ import os, re, hashlib
 VER = hashlib.md5(open("css/site.css", "rb").read() + open("js/site.js", "rb").read()).hexdigest()[:8]
 SITE = "https://www.franschhoekhospitalityacademy.co.za/"
 OG = "https://static.wixstatic.com/media/feb0d8_d01647c1d4964f90a66865bf96583566f002.jpg"
-NAV = [("our-impact.html","Our Impact"),("study.html","Study With Us"),("support-us.html","Support Us"),("about.html","About"),("academy-diary.html","Academy Diary"),("partners-contact.html","Partners &amp; Contact")]
+NAV = [("our-impact.html","Our Impact"),("study.html","Study With Us"),("support-us.html","Support Us"),("about.html","About"),("academy-diary.html","Academy Diary")]
+# Pages listed under a top-menu item as a small dropdown
+SUBNAV = {"about.html": [("about.html","About us"),("partners.html","Partners &amp; sponsors")]}
 
 def head(title, desc, fname):
     url = SITE + ("" if fname == "index.html" else fname.replace(".html",""))
@@ -33,8 +35,18 @@ def head(title, desc, fname):
 
 def header(active, donate_href):
     cur = ' aria-current="page"'
-    links = "\n      ".join('<a href="%s"%s>%s</a>' % (h, cur if h == active else "", t) for h, t in NAV)
-    mlinks = "\n    ".join(f'<a href="{h}">{t}</a>' for h,t in NAV)
+    def item(h, t):
+        sub = SUBNAV.get(h)
+        on = active == h or (sub and any(active == sh for sh, _ in sub))
+        if not sub:
+            return '<a href="%s"%s>%s</a>' % (h, cur if on else "", t)
+        subl = "".join('<a href="%s">%s</a>' % (sh, st) for sh, st in sub)
+        return '<div class="nav-drop"><a href="%s"%s aria-haspopup="true">%s</a><div class="nav-sub">%s</div></div>' % (h, cur if on else "", t, subl)
+    links = "\n      ".join(item(h, t) for h, t in NAV)
+    flat = []
+    for h, t in NAV:
+        flat += SUBNAV.get(h, [(h, t)])
+    mlinks = "\n    ".join(f'<a href="{h}">{t}</a>' for h, t in flat + [("contact.html", "Contact us")])
     return f"""<header class="site-header">
   <div class="wrap">
     <a class="brand" href="index.html" aria-label="Franschhoek Hospitality Academy home">
@@ -65,9 +77,9 @@ REDIRECTS = {
     "get-involved": "support-us.html",
     "meet-the-team": "about.html#team",
     "news": "academy-diary.html",
-    "collaboration": "partners-contact.html#collaborations",
-    "sponsors": "partners-contact.html#sponsors",
-    "contact": "partners-contact.html#contact",
+    "collaboration": "partners.html#collaborations",
+    "sponsors": "partners.html#sponsors",
+    "partners-contact": "partners.html",
 }
 
 def read_page(path):
@@ -87,6 +99,8 @@ def build(src, out, active, prefix=""):
     meta, body = read_page(src)
     donate = "#give" if 'data-donate' in body else "support-us.html#give"
     html = head(meta["title"], meta["description"], out) + header(active, donate) + '\n<main id="main">\n' + body + '</main>\n\n' + FOOTER + f'<script src="js/site.js?v={VER}"></script>\n</body>\n</html>\n'
+    # Links to other websites open in a new tab so the Academy site stays open
+    html = re.sub(r'<a ((?:(?!target=)[^>])*?href="https?://(?:(?!target=)[^>])*)>', r'<a \1 target="_blank" rel="noopener">', html)
     if prefix:
         html = relink(html, prefix)
     open(out, "w").write(html)
