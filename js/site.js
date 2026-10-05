@@ -128,7 +128,7 @@
 
 // Impact numbers: count up every time they scroll into view
 (function () {
-  var nums = document.querySelectorAll('.stat b');
+  var nums = document.querySelectorAll('.stat b:not(.no-count)'); // dates and other facts are left alone
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!nums.length || reduce || !('IntersectionObserver' in window)) return;
   var run = function (el) {
@@ -363,4 +363,8 @@
       if (empty) empty.hidden = shown > 0;
     });
   });
+  // Links like academy-diary.html?filter=events open with that filter chosen
+  var start = new URLSearchParams(location.search).get('filter');
+  var startBtn = start && document.querySelector('[data-filter="' + start + '"]');
+  if (startBtn) startBtn.click();
 })();

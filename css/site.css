@@ -510,3 +510,9 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .diary-filters .btn{font-family:var(--sans)}
 .diary-filters .btn-outline{background:transparent}
 .diary-filters .btn-ink{background:var(--ink);color:var(--white);border-color:var(--ink)}
+
+/* Study: skills highlight on hover */
+.skills .chip{position:relative;cursor:default;transition:background-color .25s ease,color .25s ease,border-color .25s ease,transform .25s ease,box-shadow .25s ease}
+.skills .chip::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:12px;vertical-align:middle;transition:transform .25s ease}
+.skills .chip:hover{background:var(--green);color:var(--white);border-color:var(--green);transform:translateY(-3px);box-shadow:0 10px 24px rgba(23,33,27,.14)}
+.skills .chip:hover::before{transform:scale(1.5)}
