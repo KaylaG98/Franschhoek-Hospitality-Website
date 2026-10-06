@@ -246,6 +246,9 @@
     volunteer: ['Volunteering my time', "I'd like to share my skills with the students as a guest lecturer or mentor."],
     supplies: ['Donating kitchen supplies or stationery', "I'd like to sponsor kitchen supplies for the Academy."],
     stationery: ['Donating kitchen supplies or stationery', "I'd like to sponsor stationery and printing for the Academy."],
+    study: ['Studying at the Academy', ''],
+    donate: ['Making a donation', ''],
+    certificate: ['Making a donation', "I've made a donation and would like a Section 18A tax certificate. My name, the amount and the date:"],
     sponsor: ['Sponsorship or partnership', ''],
     ambassador: ['Becoming an ambassador', "I'd like to find out about becoming an ambassador for the Academy."]
   };
