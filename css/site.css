@@ -518,3 +518,9 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .skills .chip:hover::before{transform:scale(1.5)}
 .logo-name{font-family:var(--serif);font-weight:600;font-size:24px;color:var(--ink);letter-spacing:.02em}
 .logo-strip .logo-name{font-size:22px;color:var(--muted)}
+
+/* Logos whose image files have lots of empty space around them: show them larger */
+.logo-box img.logo-zoom{transform:scale(1.35)}
+.logo-box img.logo-zoom-lg{transform:scale(1.9)}
+.logo-strip img.logo-zoom{transform:scale(1.25);margin:0 8px}
+.logo-strip img.logo-zoom-lg{transform:scale(1.6);margin:0 14px}
