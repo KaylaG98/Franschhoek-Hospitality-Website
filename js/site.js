@@ -402,7 +402,7 @@
     austria: 'itm', scholarship: 'itm', scholarships: 'itm', abroad: 'itm', overseas: 'itm',
     volunteer: 'volunt', volunteering: 'volunt', volunteers: 'volunt',
     sponsors: 'sponsor', partner: 'sponsor', partners: 'sponsor', sponsorship: 'sponsor',
-    founder: 'found', founders: 'found', founded: 'found', started: 'found', history: 'found', story: 'found',
+    founder: 'found', founders: 'found', founded: 'found', started: 'found', opened: 'found', opens: 'found', established: 'found', history: 'found', story: 'found',
     tax: 'section', certificate: 'section', '18a': 'section',
     internship: 'placement', experience: 'experienc'
   };
@@ -430,7 +430,15 @@
     Object.keys(df).forEach(function (w) { idf[w] = Math.log(1 + data.length / df[w]); });
     return data;
   }
+  function tidy(q) {
+    return q.toLowerCase()
+      .replace(/how old (is|are) (the |your |fha |this )?(charity|academy|organi[sz]ation|trust|school|fha|it|you)\b/g, 'when was the academy founded')
+      .replace(/when (was|did) (the |your |fha )?(charity|academy|organi[sz]ation|trust|school|fha|it|you) (start|begin|open)\w*/g, 'when was the academy founded')
+      .replace(/\bcharity\b/g, '');
+  }
   function search(q) {
+    var wantYear = /\bwhen\b|how old|what year/i.test(q);
+    q = tidy(q);
     var qw = words(q).filter(function (w, i, a) { return a.indexOf(w) === i; });
     if (!qw.length) return [];
     var qfull = words(q, true).filter(function (w, i, a) { return a.indexOf(w) === i; });
@@ -443,11 +451,12 @@
       });
       qfull.forEach(function (w) { if (b.qw.indexOf(w) >= 0) qhits++; });
       if (b.qw.length && qhits) s *= 1 + 1.5 * qhits / qfull.length * (qhits / b.qw.length);  // the question matches one of our FAQs
+      if (wantYear && /\b(19|20)\d\d\b/.test(b.t)) s *= 2.5;           // 'when' questions want a date
       if (wantNumber && b.t.length < 160 && /(^|\s)\d{1,3}(,\d{3})*%?(\s|$)/.test(b.t) && qw.every(function (w) { return b.w.indexOf(w) >= 0; })) s *= 2.5;  // short facts with a count
       if (b.t.length < 30 && !/\d/.test(b.t)) s *= 0.6;             // very short labels say little on their own (numbers do)
       s *= hits / qw.length;                                        // reward matching more of the question
       return { b: b, s: s, hits: hits };
-    }).filter(function (r) { return r.hits && r.hits / qw.length >= 0.5; });
+    }).filter(function (r) { return r.hits && r.hits / qw.length >= 0.6; });  // most of the question must match
     scored.sort(function (a, b) { return b.s - a.s; });
     var best = scored[0];
     if (!best || best.s < 2) return [];
@@ -476,6 +485,11 @@
   var openBtn = wrap.querySelector('.chat-open'), panel = wrap.querySelector('.chat-panel'),
       log = wrap.querySelector('.chat-log'), form = wrap.querySelector('.chat-form'), input = wrap.querySelector('#chat-q'),
       suggest = wrap.querySelector('.chat-suggest');
+  var OPENERS = ['Good question! Here’s what I found:', 'Here’s what our website says:', 'Happy to help. Here you go:', 'Sure! Here’s the answer:'];
+  var asked = 0;
+  function showSuggestions() {
+    suggest.innerHTML = SUGGESTIONS.map(function (s) { return '<button type="button">' + s + '</button>'; }).join('');
+  }
   var SUGGESTIONS = ['How do I apply?', 'Who can apply?', 'What are the fees?', 'How can I donate?', 'Where do graduates work?', 'How do I contact you?'];
 
   function say(html, who) {
@@ -491,13 +505,15 @@
     var go = function () {
       var res = search(q);
       if (!res.length) {
-        say('Sorry, I couldn’t find an answer to that on our website. You can <a href="' + base + 'contact.html#contact">send us a message</a> and our team will help.', 'bot');
+        say('I’m not sure about that one, sorry. Here are some questions I can help with, or you can <a href="' + base + 'contact.html#contact">ask our team on the Contact Us page</a> and we’ll get back to you.', 'bot');
+        showSuggestions();
         return;
       }
-      say(res.map(function (b) {
+      var intro = OPENERS[asked++ % OPENERS.length];
+      say('<p class="chat-intro">' + intro + '</p>' + res.map(function (b) {
         var t = b.t.length > 420 ? b.t.slice(0, 400).replace(/\s\S*$/, '') + '…' : b.t;
         return '<p>' + esc(t) + '</p><a class="chat-link" href="' + base + b.u + '">Read more on the ' + esc(pageName(b)) + ' page →</a>';
-      }).join('<hr>'), 'bot');
+      }).join('<hr>') + '<p class="chat-outro">Didn’t answer your question? <a href="' + base + 'contact.html#contact">Contact us</a> and we’ll help.</p>', 'bot');
     };
     if (index) go();
     else fetch(base + 'chat-index.json').then(function (r) { return r.json(); }).then(function (d) { index = prepare(d); go(); })
@@ -509,8 +525,8 @@
     wrap.classList.toggle('is-open', show);
     if (show) {
       if (!log.children.length) {
-        say('Hi! Ask me anything about studying at the Academy, our impact or how to support us.', 'bot');
-        suggest.innerHTML = SUGGESTIONS.map(function (s) { return '<button type="button">' + s + '</button>'; }).join('');
+        say('Hi there! I can answer questions about studying at the Academy, our impact and how to support us. Tap a question below or type your own.', 'bot');
+        showSuggestions();
       }
       if (!index) fetch(base + 'chat-index.json').then(function (r) { return r.json(); }).then(function (d) { if (!index) index = prepare(d); }).catch(function () {});
       input.focus();
