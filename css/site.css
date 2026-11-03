@@ -529,3 +529,18 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .itm-list{list-style:none;margin:4px 0 8px;padding:0;display:grid;gap:8px;color:#fff}
 .itm-list li{display:flex;gap:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.14)}
 .itm-list b{color:var(--gold);min-width:44px}
+
+/* About: ambassador without a photo yet (initials) */
+.ph.initials{display:flex;align-items:center;justify-content:center;background:var(--sand)}
+.ph.initials span{font-family:var(--serif);font-weight:600;font-size:48px;color:var(--green)}
+/* Study: lecturer list */
+.lecturers{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px 32px}
+.lecturers li{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid var(--card-line)}
+.lecturers span{color:var(--muted)}
+/* Our Impact: text-only graduate story and alumni list */
+.grad-story-text{margin-top:24px;padding:40px 48px;gap:10px}
+.alumni{margin-top:24px;gap:16px}
+.alum{background:var(--white);border:1px solid var(--card-line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:4px}
+.alum b{font-family:var(--serif);font-size:22px}
+.alum p{margin:6px 0 0;color:var(--muted)}
+@media (max-width:600px){.grad-story-text{padding:28px 24px}}
