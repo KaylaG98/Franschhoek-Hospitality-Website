@@ -70,8 +70,9 @@
     var d = document.createElement('dialog');
     d.className = 'video-pop';
     d.innerHTML = '<button class="video-pop-close" aria-label="Close video">&times;</button>' +
-      '<div class="video-pop-frame"><iframe src="https://www.youtube-nocookie.com/embed/' + id +
-      '?autoplay=1&rel=0&modestbranding=1" title="' + title.replace(/"/g, '') + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>';
+      '<div class="video-pop-frame"><iframe src="https://www.youtube.com/embed/' + id +
+      '?autoplay=1&rel=0&playsinline=1" title="' + title.replace(/"/g, '') + '" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' +
+      '<a class="video-pop-alt" href="https://www.youtube.com/watch?v=' + id + '" target="_blank" rel="noopener">Video not playing? Watch it on YouTube →</a>';
     document.body.appendChild(d);
     var close = function () { d.close(); };
     d.querySelector('.video-pop-close').addEventListener('click', close);
@@ -371,4 +372,159 @@
   var start = new URLSearchParams(location.search).get('filter');
   var startBtn = start && document.querySelector('[data-filter="' + start + '"]');
   if (startBtn) startBtn.click();
+})();
+
+
+// "Ask a question" chat assistant. It only answers with text found on this website (chat-index.json, made by build.py)
+(function () {
+  var me = document.querySelector('script[src*="js/site.js"]');
+  var base = me ? me.getAttribute('src').replace(/js\/site\.js.*$/, '') : '';
+  var index = null;
+  var STOP = ('a an the and or of to in on for at by is are was were be been do does did i me my we our us you your it its this that ' +
+    'what whats which who whom how when why can could would should will shall may might there here about with from as into ' +
+    'please tell know want need get any some have has had am if so than then them they their fha academy franschhoek hospitality ' +
+    'many much like more most just also very really ok hi hello thanks thank').split(' ');
+  var WH = ['who', 'what', 'when', 'where', 'how', 'which', 'why'];
+  // words that mean the same thing for our questions; a word can point to more than one meaning
+  var SYN = {
+    cost: 'fee', costs: 'fee', price: 'fee', prices: 'fee', expensive: 'fee', afford: 'fee', fees: 'fee', tuition: 'fee',
+    give: 'donat', giving: 'donat', donation: 'donat', donations: 'donat', donate: 'donat', donor: 'donat', snapscan: 'donat', paypal: 'donat', eft: 'donat',
+    application: 'appl', applying: 'appl', apply: 'appl', enrol: 'appl', enroll: 'appl', enrolment: 'appl', register: 'appl',
+    deadline: 'close', closing: 'close', closes: 'close',
+    location: 'address', located: 'address', where: 'address', street: 'address', directions: 'address', map: 'address', campus: 'campus', campuses: 'campus',
+    phone: 'contact', email: 'contact', call: 'contact', whatsapp: 'contact', number: 'contact', touch: 'contact',
+    subjects: 'learn', subject: 'learn', modules: 'learn', module: 'learn', curriculum: 'learn', learning: 'learn', skills: 'learn',
+    teach: ['learn', 'team'], teaches: ['learn', 'team'], taught: ['learn', 'team'], lecturer: 'team', lecturers: 'team', teacher: 'team', teachers: 'team', staff: 'team',
+    job: 'work', jobs: 'work', employed: 'work', employment: 'work', career: 'work', careers: 'work', working: 'work', employer: 'work', employers: 'work',
+    graduate: 'graduat', graduates: 'graduat', alumni: 'graduat', graduated: 'graduat', graduation: 'graduat',
+    long: 'month', duration: 'month', months: 'month', weeks: 'month',
+    requirements: 'requir', requirement: 'requir', qualify: 'requir', eligible: 'requir', eligibility: 'requir', grade: 'requir', matric: 'requir', age: 'requir', old: 'requir',
+    austria: 'itm', scholarship: 'itm', scholarships: 'itm', abroad: 'itm', overseas: 'itm',
+    volunteer: 'volunt', volunteering: 'volunt', volunteers: 'volunt',
+    sponsors: 'sponsor', partner: 'sponsor', partners: 'sponsor', sponsorship: 'sponsor',
+    founder: 'found', founders: 'found', founded: 'found', started: 'found', history: 'found', story: 'found',
+    tax: 'section', certificate: 'section', '18a': 'section',
+    internship: 'placement', experience: 'experienc'
+  };
+  function stems(w) {
+    var s = SYN[w];
+    if (!s && w.length > 4) { var b = w.replace(/(ing|ies|es|ed|s)$/, ''); s = SYN[b] || b; }
+    return [].concat(s || w);
+  }
+  function words(text, keepWh) {
+    var out = [];
+    (text.toLowerCase().replace(/[’']/g, '').match(/[a-z0-9]+/g) || []).forEach(function (w) {
+      if (keepWh && WH.indexOf(w) >= 0 && !SYN[w]) out.push(w);
+      else if (STOP.indexOf(w) < 0 && (w.length > 1 || /\d/.test(w))) out = out.concat(stems(w));
+    });
+    return out;
+  }
+  var idf = {};
+  function prepare(data) {
+    var df = {};
+    data.forEach(function (b) {
+      b.w = words(b.t); b.hw = b.t === b.h ? [] : words(b.h || ''); b.qw = words(b.q || '', true);
+      var seen = {};
+      b.w.concat(b.hw).forEach(function (w) { if (!seen[w]) { seen[w] = 1; df[w] = (df[w] || 0) + 1; } });
+    });
+    Object.keys(df).forEach(function (w) { idf[w] = Math.log(1 + data.length / df[w]); });
+    return data;
+  }
+  function search(q) {
+    var qw = words(q).filter(function (w, i, a) { return a.indexOf(w) === i; });
+    if (!qw.length) return [];
+    var qfull = words(q, true).filter(function (w, i, a) { return a.indexOf(w) === i; });
+    var wantNumber = /how many|number of/i.test(q);
+    var scored = index.map(function (b) {
+      var s = 0, hits = 0, qhits = 0;
+      qw.forEach(function (w) {
+        var inText = b.w.indexOf(w) >= 0, inHead = b.hw.indexOf(w) >= 0;
+        if (inText || inHead) { hits++; s += (idf[w] || 1) * ((inText ? 1 : 0) + (inHead ? 1.2 : 0)); }
+      });
+      qfull.forEach(function (w) { if (b.qw.indexOf(w) >= 0) qhits++; });
+      if (b.qw.length && qhits) s *= 1 + 1.5 * qhits / qfull.length * (qhits / b.qw.length);  // the question matches one of our FAQs
+      if (wantNumber && b.t.length < 160 && /(^|\s)\d{1,3}(,\d{3})*%?(\s|$)/.test(b.t) && qw.every(function (w) { return b.w.indexOf(w) >= 0; })) s *= 2.5;  // short facts with a count
+      if (b.t.length < 30 && !/\d/.test(b.t)) s *= 0.6;             // very short labels say little on their own (numbers do)
+      s *= hits / qw.length;                                        // reward matching more of the question
+      return { b: b, s: s, hits: hits };
+    }).filter(function (r) { return r.hits && r.hits / qw.length >= 0.5; });
+    scored.sort(function (a, b) { return b.s - a.s; });
+    var best = scored[0];
+    if (!best || best.s < 2) return [];
+    var out = [best];
+    for (var i = 1; i < scored.length && out.length < 2; i++) {
+      if (scored[i].s > best.s * 0.8 && scored[i].b.t !== best.b.t) out.push(scored[i]);
+    }
+    return out.map(function (r) { return r.b; });
+  }
+  function esc(t) { return t.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var NAMES = { 'index.html': 'Home', 'study.html': 'Study With Us', 'support-us.html': 'Support Us', 'about.html': 'About', 'our-impact.html': 'Our Impact',
+    'academy-diary.html': 'Academy Diary', 'partners.html': 'Partners & Sponsors', 'contact.html': 'Contact Us' };
+  function pageName(b) { return NAMES[b.u.split('#')[0]] || 'Academy Diary'; }
+
+  var wrap = document.createElement('div');
+  wrap.className = 'chat';
+  wrap.innerHTML =
+    '<button class="chat-open" aria-label="Ask a question" aria-expanded="false" aria-controls="chat-panel"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Ask a question</span></button>' +
+    '<div class="chat-panel" id="chat-panel" role="dialog" aria-label="Ask a question" hidden>' +
+      '<div class="chat-head"><div><b>Ask us a question</b><span>Answers come straight from our website</span></div><button class="chat-close" aria-label="Close">&times;</button></div>' +
+      '<div class="chat-log" aria-live="polite"></div>' +
+      '<div class="chat-suggest"></div>' +
+      '<form class="chat-form"><label class="sr-only" for="chat-q">Your question</label><input id="chat-q" type="text" placeholder="Type your question…" autocomplete="off" maxlength="200"><button type="submit" aria-label="Send">→</button></form>' +
+    '</div>';
+  document.body.appendChild(wrap);
+  var openBtn = wrap.querySelector('.chat-open'), panel = wrap.querySelector('.chat-panel'),
+      log = wrap.querySelector('.chat-log'), form = wrap.querySelector('.chat-form'), input = wrap.querySelector('#chat-q'),
+      suggest = wrap.querySelector('.chat-suggest');
+  var SUGGESTIONS = ['How do I apply?', 'Who can apply?', 'What are the fees?', 'How can I donate?', 'Where do graduates work?', 'How do I contact you?'];
+
+  function say(html, who) {
+    var m = document.createElement('div');
+    m.className = 'chat-msg ' + who;
+    m.innerHTML = html;
+    log.appendChild(m);
+    log.scrollTop = who === 'bot' ? Math.max(0, m.offsetTop - 70) : log.scrollHeight;  // show the start of each answer
+  }
+  function answer(q) {
+    suggest.innerHTML = '';
+    say(esc(q), 'me');
+    var go = function () {
+      var res = search(q);
+      if (!res.length) {
+        say('Sorry, I couldn’t find an answer to that on our website. You can <a href="' + base + 'contact.html#contact">send us a message</a> and our team will help.', 'bot');
+        return;
+      }
+      say(res.map(function (b) {
+        var t = b.t.length > 420 ? b.t.slice(0, 400).replace(/\s\S*$/, '') + '…' : b.t;
+        return '<p>' + esc(t) + '</p><a class="chat-link" href="' + base + b.u + '">Read more on the ' + esc(pageName(b)) + ' page →</a>';
+      }).join('<hr>'), 'bot');
+    };
+    if (index) go();
+    else fetch(base + 'chat-index.json').then(function (r) { return r.json(); }).then(function (d) { index = prepare(d); go(); })
+      .catch(function () { say('Sorry, I can’t load answers right now. Please <a href="' + base + 'contact.html#contact">contact us</a>.', 'bot'); });
+  }
+  function toggle(show) {
+    panel.hidden = !show;
+    openBtn.setAttribute('aria-expanded', show);
+    wrap.classList.toggle('is-open', show);
+    if (show) {
+      if (!log.children.length) {
+        say('Hi! Ask me anything about studying at the Academy, our impact or how to support us.', 'bot');
+        suggest.innerHTML = SUGGESTIONS.map(function (s) { return '<button type="button">' + s + '</button>'; }).join('');
+      }
+      if (!index) fetch(base + 'chat-index.json').then(function (r) { return r.json(); }).then(function (d) { if (!index) index = prepare(d); }).catch(function () {});
+      input.focus();
+    } else openBtn.focus();
+  }
+  openBtn.addEventListener('click', function () { toggle(panel.hidden); });
+  wrap.querySelector('.chat-close').addEventListener('click', function () { toggle(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) toggle(false); });
+  suggest.addEventListener('click', function (e) { if (e.target.tagName === 'BUTTON') answer(e.target.textContent); });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var q = input.value.trim();
+    if (!q) return;
+    input.value = '';
+    answer(q);
+  });
 })();
