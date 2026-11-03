@@ -119,6 +119,114 @@ for fname in sorted(os.listdir("src/diary")):
     build(os.path.join("src/diary", fname), "diary/" + fname, "academy-diary.html", prefix="../")
     built.append("diary/" + fname)
 
+# Chat assistant: index the text of every page so the "Ask a question" box can only answer from the website
+from html.parser import HTMLParser
+import json
+
+class Blocks(HTMLParser):
+    """Turns page HTML into short text blocks (a paragraph, an FAQ answer, a stat, a person...)."""
+    BREAK = {"p", "li", "h1", "h2", "h3", "h4", "blockquote", "div", "summary", "dt", "dd", "tr"}
+    ATOMIC_TAGS = {"details", "li", "blockquote"}
+    ATOMIC_CLASSES = {"stat", "person", "alum", "logo-tile", "tl-item", "chip", "fee-table", "help-card", "employers", "card objective reveal", "card"}
+    SKIP = {"script", "style", "svg", "form", "button", "select", "dialog", "noscript"}
+    def __init__(self, url):
+        super().__init__(convert_charrefs=True)
+        self.url, self.anchor, self.heading = url, "", ""
+        self.buf, self.blocks, self.skip, self.atomic, self.stack, self.q, self.inq = [], [], 0, 0, [], "", False
+        self.logos, self.pre = 0, ""
+    def flush(self):
+        text = re.sub(r"\s+", " ", "".join(self.buf)).strip()
+        self.buf = []
+        if len(text) > 2 and not text.startswith("[") and "[" not in text[:40]:
+            b = {"t": text, "h": self.heading, "u": self.url + (("#" + self.anchor) if self.anchor else "")}
+            if self.q:
+                b["q"] = self.q  # an FAQ question, matched first
+            self.blocks.append(b)
+        self.q = ""
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs)
+        if tag == "br":
+            self.buf.append(" ")
+        if tag == "img" and self.logos and a.get("alt") and not self.skip:
+            self.buf.append(a["alt"] + ", ")  # logo names, e.g. the employers our graduates work for
+        if tag in ("img", "br", "input", "meta", "link", "source", "hr"):
+            return
+        if tag == "summary":
+            self.inq, self.q = True, ""
+        if tag == "section":
+            self.anchor = a.get("id", "")
+        if self.skip or tag in self.SKIP or "hidden" in a or any(c in (a.get("class") or "").split() for c in ("skip", "card-role", "tl-hint", "swipe-hint", "hover-hint", "sr-only")):
+            self.stack.append(("skip", tag)); self.skip += 1; return
+        atomic = tag in self.ATOMIC_TAGS or (a.get("class") or "") in self.ATOMIC_CLASSES or any(c in self.ATOMIC_CLASSES - {"card"} for c in (a.get("class") or "").split())
+        if atomic and not self.atomic:
+            self.flush()
+        if atomic:
+            self.atomic += 1
+        if any(c in (a.get("class") or "").split() for c in ("employers", "logo-strip", "logo-tile")):
+            self.logos += 1; atomic = atomic or True
+        self.stack.append(("atomic" if atomic else "", tag))
+        if tag in ("h1", "h2", "h3") and not self.atomic:
+            # a short label just before a heading (e.g. "Where our graduates work") belongs with it
+            pre = re.sub(r"\s+", " ", "".join(self.buf)).strip()
+            self.buf, self.pre = [], (pre if 0 < len(pre) < 60 else "")
+            if pre and not self.pre:
+                self.buf = [pre]; self.flush()
+    def handle_endtag(self, tag):
+        if tag in ("img", "br", "input", "meta", "link", "source", "hr") or not self.stack:
+            return
+        kind, t = self.stack.pop()
+        while t != tag and self.stack:
+            kind, t = self.stack.pop()
+        if kind == "skip":
+            self.skip -= 1; return
+        if tag == "summary":
+            self.inq = False
+        if kind == "atomic":
+            if self.logos and tag == "div":
+                self.logos = max(0, self.logos - 1)
+            self.atomic -= 1
+            if not self.atomic:
+                self.flush()
+            return
+        if tag in ("h1", "h2", "h3") and not self.atomic:
+            self.heading = re.sub(r"\s+", " ", "".join(self.buf)).strip()
+            self.flush()
+            if self.pre:
+                self.heading = self.pre + " · " + self.heading
+        elif tag in self.BREAK and not self.atomic:
+            self.flush()
+        elif self.atomic and (tag in self.BREAK or tag in ("span", "b", "summary", "a")):
+            self.buf.append(" ")
+    def handle_data(self, data):
+        if not self.skip:
+            self.buf.append(data)
+            if self.inq:
+                self.q += data
+
+chat = []
+for path in built:
+    src = ("src/pages/" + path) if "/" not in path else ("src/diary/" + path.split("/")[1])
+    meta, body = read_page(src)
+    parser = Blocks(path)
+    parser.feed(body); parser.flush()
+    title = meta["title"].split(" | ")[0]
+    for b in parser.blocks:
+        b["p"] = title
+    chat += parser.blocks
+fparser = Blocks("contact.html")
+fparser.heading = "Contact us"
+fparser.feed(FOOTER); fparser.flush()
+for b in fparser.blocks:
+    b["p"] = "Contact Us"
+chat += fparser.blocks
+# drop exact duplicates (e.g. the same line on two pages)
+seen, unique = set(), []
+for b in chat:
+    if b["t"] not in seen:
+        seen.add(b["t"]); unique.append(b)
+open("chat-index.json", "w").write(json.dumps(unique, ensure_ascii=False, separators=(",", ":")))
+print("built chat-index.json", len(unique), "blocks")
+
 for old, target in REDIRECTS.items():
     canonical = page_url(target.split("#")[0])
     open(old + ".html", "w").write(f"""<!doctype html>
