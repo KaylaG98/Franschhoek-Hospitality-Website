@@ -524,3 +524,8 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .logo-box img.logo-zoom-lg{transform:scale(1.9)}
 .logo-strip img.logo-zoom{transform:scale(1.25);margin:0 8px}
 .logo-strip img.logo-zoom-lg{transform:scale(1.6);margin:0 14px}
+
+/* Study: list of ITM College Austria scholars */
+.itm-list{list-style:none;margin:4px 0 8px;padding:0;display:grid;gap:8px;color:#fff}
+.itm-list li{display:flex;gap:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.14)}
+.itm-list b{color:var(--gold);min-width:44px}
