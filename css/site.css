@@ -582,3 +582,5 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
   .chat.is-open{left:12px}
   .chat-panel{width:100%;height:min(560px,calc(100vh - 90px))}
 }
+.chat-msg .chat-intro{font-weight:600;margin-bottom:6px}
+.chat-msg .chat-outro{margin-top:10px;font-size:13px;color:var(--muted)}
