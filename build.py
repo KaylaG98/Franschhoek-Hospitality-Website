@@ -77,7 +77,7 @@ REDIRECTS = {
     "get-involved": "support-us.html",
     "meet-the-team": "about.html#team",
     "news": "academy-diary.html",
-    "collaboration": "partners.html#collaborations",
+    "collaboration": "partners.html#sponsors",
     "sponsors": "partners.html#sponsors",
     "partners-contact": "partners.html",
 }

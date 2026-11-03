@@ -42,7 +42,7 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 | about.html | About | Story, milestones, vision, values, objectives, team (swipe carousel on phones), ambassadors (Reuben video + click-to-open bios), governance |
 | our-impact.html | Our Impact | Numbers, employer logos, graduate stories, film, donate band |
 | academy-diary.html | Academy Diary | Featured post, filters, post grid, newsletter (blog listing, built by hand) |
-| partners.html | Partners & Sponsors | Sponsor logo grid, Collaborations (FRANCO, Hospice Franschhoek), partner call to action. In the menu under About |
+| partners.html | Partners & Sponsors | Sponsor logo grid with website links (incl. PACT, Nation Builder, Cape Wine Auction; La Motte and Hospice removed Nov 2026), partner call to action. In the menu under About |
 | contact.html | Contact Us | Contact details, map, contact form (`?topic=volunteer|supplies|stationery|sponsor` pre-chooses the topic). Linked from the footer button and phone menu |
 
 ## Design system
@@ -73,7 +73,7 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 4. **Custom domain:** the domain franschhoekhospitalityacademy.co.za is managed in Wix. Add a `CNAME` file, then guide Kayla through the Wix DNS changes (GitHub Pages A records and a `www` CNAME). Enable HTTPS.
 5. **Redirects from old Wix URLs** so Google links don't break: /apply-now → study.html, /get-involved → support-us.html, /meet-the-team → about.html, /news → academy-diary.html, /collaboration, /sponsors and /contact → partners-contact.html, /itm-college-austria → study.html. Use small redirect pages (meta refresh + canonical).
 6. **SEO:** add `sitemap.xml` and `robots.txt`, then set up Google Search Console once the domain is live. (The old Wix site had a noindex problem that is now fixed. Google Search Console was never connected.)
-7. **Placeholders** in [square brackets]: 2027 dates, FAQ answers, graduate stories, ambassador bios (Margot Janse, Matthew Gordon, Chris Erasmus, Linda Coltart), Tarryn Corlett's role, employer logos, the Reuben Riffel video, the Hospice Franschhoek logo, an unidentified ninth sponsor, the impact report PDF. Ask Kayla for these. Don't invent content.
+7. **Placeholders** in [square brackets]: 2027 dates, FAQ answers, graduate stories, ambassador bio and photo for Shirly Killian (and a photo for Ryan Shell); ambassadors are Reuben Riffel, Margot Janse, Matthew Gordon, Ryan Shell, Shirly Killian, Tarryn Corlett's role, employer logos, the Reuben Riffel video, the Hospice Franschhoek logo, an unidentified ninth sponsor, the impact report PDF. Ask Kayla for these. Don't invent content.
 8. **Academy Diary:** create a simple post template (`diary/YYYY-MM-slug.html`) and a monthly checklist, so each monthly update is quick.
 9. **Monthly donations:** SnapScan is once-off only. Real monthly debit orders need a provider such as PayFast. Raise this with Kayla later; it's not urgent.
 
