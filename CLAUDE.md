@@ -54,7 +54,7 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 
 ## Key facts and links (confirmed)
 
-- 587 graduates since 2018 · 96% in work · 3,500+ community members reached · 2 full ITM College Austria scholarships a year · 1 campus (Franschhoek). Sources: IOL, 16 Dec 2025; FHA ITM page.
+- 156 graduates 2018–2025 (178 enrolled) · 96% in full-time work (150 of 156) · 717 people trained directly incl. evening/short courses · ~4,200 indirectly impacted (one employed person supports up to 6) · 15 ITM College Austria scholars so far (list on study.html#itm) · satellite campus with PACT in Prince Albert. Sources: FHA Funding Report 2 (Q2 2026) and Impact & Employment Outcomes report, supplied by Kayla Nov 2026. (The old 587 / 3,500+ figures from IOL were wrong; don't reuse them.)
 - Founded 2018 by Michaela Julian, Tarryn Corlett and Brian Moor. Jeremy Davids is Academy Head. Moved into the former Haute Cabrière Education Centre in May 2023. Partnership with Prince Albert Community Trust (PACT) from Feb 2026.
 - Charitable Trust IT000107/2017(C) · registered PBO · Section 18A certificates.
 - Address: Farm Cabrière, Daniel Hugo Street, Franschhoek 7690 · +27 60 381 0083 · Admissions: Shaneill Jefthas, 081 009 5157, shaneill@franschhoekhospitalityacademy.co.za · Donations: michaela@franschhoekhospitalityacademy.co.za (Kayla to confirm this mailbox exists).
