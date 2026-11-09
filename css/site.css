@@ -636,3 +636,6 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .goal p{margin:0;color:var(--muted)}
 @media (max-width:600px){.goals{grid-template-columns:1fr}}
 .goal-icon{width:44px;height:44px;border-radius:12px;background:var(--green);color:var(--gold);display:flex;align-items:center;justify-content:center}
+.employers .logo-box img.logo-wide{max-width:82%}
+.employers .logo-box img.logo-small{max-height:46px}
+@media (max-width:600px){.employers .logo-box img.logo-small{max-height:34px}}
