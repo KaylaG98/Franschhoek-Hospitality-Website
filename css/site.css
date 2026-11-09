@@ -628,3 +628,11 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .story-cards .card{padding:32px;gap:10px;position:relative;overflow:hidden}
 .story-cards .card p{margin:0;color:var(--muted)}
 .about-pull{margin:56px 0 0;max-width:900px;color:var(--green);padding-left:24px;border-left:4px solid var(--gold)}
+/* Our Impact: the Academy's two goals */
+.goals{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.goal{background:var(--white);border:1px solid var(--card-line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:8px}
+.goal-num{width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--ink);font-weight:700;display:flex;align-items:center;justify-content:center}
+.goal h3{font-size:22px}
+.goal p{margin:0;color:var(--muted)}
+@media (max-width:600px){.goals{grid-template-columns:1fr}}
+.goal-icon{width:44px;height:44px;border-radius:12px;background:var(--green);color:var(--gold);display:flex;align-items:center;justify-content:center}
