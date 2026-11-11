@@ -4,7 +4,7 @@ import os, re, hashlib
 # so browsers fetch the new styles straight after each update instead of an old saved copy
 VER = hashlib.md5(open("css/site.css", "rb").read() + open("js/site.js", "rb").read()).hexdigest()[:8]
 SITE = "https://www.franschhoekhospitalityacademy.co.za/"
-OG = "https://static.wixstatic.com/media/feb0d8_d01647c1d4964f90a66865bf96583566f002.jpg"
+OG = SITE + "images/video-posters/graduation-2024.jpg"
 NAV = [("our-impact.html","Our Impact"),("study.html","Study With Us"),("support-us.html","Support Us"),("about.html","About"),("academy-diary.html","Academy Diary")]
 # Pages listed under a top-menu item as a small dropdown
 SUBNAV = {"about.html": [("about.html","About us"),("partners.html","Partners &amp; sponsors")]}
