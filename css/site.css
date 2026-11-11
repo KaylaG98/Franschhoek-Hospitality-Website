@@ -639,3 +639,12 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .employers .logo-box img.logo-wide{max-width:82%}
 .employers .logo-box img.logo-small{max-height:46px}
 @media (max-width:600px){.employers .logo-box img.logo-small{max-height:34px}}
+/* Privacy policy and other long-text pages */
+.legal{max-width:760px}
+.legal h2{font-size:clamp(24px,2.4vw,32px);margin:44px 0 12px}
+.legal h3{font-size:20px;margin:24px 0 8px}
+.legal p,.legal li{color:var(--muted)}
+.legal ul{padding-left:22px;display:grid;gap:6px}
+.legal a{color:var(--green);font-weight:600}
+.foot-bottom a,.news-small a{color:inherit;text-decoration:underline}
+.legal p{margin:0 0 14px}

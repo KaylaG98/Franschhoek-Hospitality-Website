@@ -32,7 +32,7 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 - Top menu: `NAV` in `build.py`; `SUBNAV` adds dropdowns (About → About us, Partners & sponsors). Links to other websites get `target="_blank"` automatically at build time.
 - `MONTHLY-CHECKLIST.md`: what Kayla sends each month and what Claude does with it.
 
-### Pages (8)
+### Pages (9)
 
 | File | Page | Notes |
 | --- | --- | --- |
@@ -43,6 +43,7 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 | our-impact.html | Our Impact | Numbers, employer logos, graduate stories, film, donate band |
 | academy-diary.html | Academy Diary | Featured post, filters, post grid, newsletter (blog listing, built by hand) |
 | partners.html | Partners & Sponsors | Sponsor logo grid with website links (incl. PACT, Nation Builder, Cape Wine Auction; La Motte and Hospice removed Nov 2026), partner call to action. In the menu under About |
+| privacy.html | Privacy Policy | POPIA privacy policy (added Nov 2026). Linked from the footer, the newsletter box and the consent tick-boxes on the contact and application forms. Information Officer name and email still [to be confirmed] |
 | contact.html | Contact Us | Contact details, map, contact form (`?topic=volunteer|supplies|stationery|sponsor` pre-chooses the topic). Linked from the footer button and phone menu |
 
 ## Design system
