@@ -648,3 +648,10 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .legal a{color:var(--green);font-weight:600}
 .foot-bottom a,.news-small a{color:inherit;text-decoration:underline}
 .legal p{margin:0 0 14px}
+/* Our Impact: newsletter sign-up under the donate band */
+.impact-news{flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap;padding:40px 64px;gap:24px;margin-top:20px}
+.impact-news h2{font-size:clamp(24px,2.4vw,32px)}
+.impact-news p{margin:0}
+.impact-news a{color:var(--green);font-weight:600}
+@media (max-width:600px){.impact-news{padding:28px 24px}}
+.impact-news .news-form input{background:var(--white);border:1px solid #CFC5B2;color:var(--ink)}
