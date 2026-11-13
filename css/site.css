@@ -655,3 +655,6 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 .impact-news a{color:var(--green);font-weight:600}
 @media (max-width:600px){.impact-news{padding:28px 24px}}
 .impact-news .news-form input{background:var(--white);border:1px solid #CFC5B2;color:var(--ink)}
+/* Tall, narrow logos (e.g. PACT) */
+.logo-box img.logo-tall{max-height:96px}
+.logo-strip img.logo-tall{height:84px}
