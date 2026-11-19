@@ -6,7 +6,7 @@ videos and PDFs live in the Wix Media Manager instead (see wix-media.json). This
 script copies the built pages, swaps every local image/video/PDF link for its Wix
 copy, and stops if a file has no Wix copy yet.
 
-  python3 wix_build.py            # writes _wix/
+  python3 wix_build.py            # writes _wix/ and wix-site.zip
   python3 wix_build.py --changed  # also lists files that differ from the last run
 """
 import json, os, re, shutil, sys, hashlib
@@ -67,6 +67,14 @@ def main():
             print("  ", m)
         sys.exit(1)
     print(f"Wrote {len(new)} files to _wix/")
+    # wix-site.zip: the whole Wix copy in one file, which Wix fetches to update the live site.
+    import zipfile
+    with zipfile.ZipFile(os.path.join(ROOT, "wix-site.zip"), "w", zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+        for rel in sorted(new):
+            info = zipfile.ZipInfo(rel, (2026, 1, 1, 0, 0, 0))  # fixed date: same pages, same zip
+            info.compress_type = zipfile.ZIP_DEFLATED
+            z.writestr(info, open(os.path.join(OUT, rel), "rb").read())
+    print("Wrote wix-site.zip")
     if "--changed" in sys.argv and old:
         changed = [r for r in new if old.get(r) != new[r]]
         gone = [r for r in old if r not in new]
