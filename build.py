@@ -10,7 +10,7 @@ NAV = [("our-impact.html","Our Impact"),("study.html","Study With Us"),("support
 SUBNAV = {"about.html": [("about.html","About us"),("partners.html","Partners &amp; sponsors")]}
 
 def head(title, desc, fname):
-    url = SITE + ("" if fname == "index.html" else fname.replace(".html",""))
+    url = page_url(fname)
     return f"""<!doctype html>
 <html lang="en-ZA">
 <head>
@@ -93,7 +93,8 @@ def relink(html, prefix):
     return re.sub(r'((?:href|src)=")(?!https?:|mailto:|tel:|#|/|\.\./|data:)', r"\1" + prefix, html)
 
 def page_url(path):
-    return SITE + ("" if path == "index.html" else path.replace(".html",""))
+    # Keep ".html": the Wix host only serves a page at its exact file name.
+    return SITE + ("" if path == "index.html" else path)
 
 def build(src, out, active, prefix=""):
     meta, body = read_page(src)

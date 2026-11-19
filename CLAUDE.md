@@ -46,6 +46,17 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 | privacy.html | Privacy Policy | POPIA privacy policy (added Nov 2026). Linked from the footer, the newsletter box and the consent tick-boxes on the contact and application forms. Information Officer name and email still [to be confirmed] |
 | contact.html | Contact Us | Contact details, map, contact form (`?topic=volunteer|supplies|stationery|sponsor` pre-chooses the topic). Linked from the footer button and phone menu |
 
+## Hosting on Wix (from Nov 2026)
+
+Nobody could find the Xneelo login for the domain, so the site is hosted as a Wix Headless site in Kayla's Wix account: **"FHA Website"**, site ID `ad3b42e8-7eb2-44cf-990d-c7622ae25777`, test address https://headless-qknuxqctjsl-shaneill-1408.wix-site-host.com. The old Wix editor site ("Franschhoek Hospitality Academy", `1a8a7e98-…`) stays in the account. GitHub is still the source of truth, and GitHub Pages stays as a preview.
+
+- Photos, videos and the PDF live in the Wix Media Manager. `wix-media.json` maps each local file to its Wix copy.
+- `python3 wix_build.py` (after `build.py`) writes `_wix/` (not committed) and `wix-site.zip`, with every media link swapped for its Wix copy. It stops if a new image has no Wix copy yet. Upload new images with UploadImageToWixSite using their GitHub Pages or raw.githubusercontent URL, then add them to `wix-media.json`.
+- To publish: commit and push `wix-site.zip`. Upload it to Wix Media with UploadImageToWixSite (raw.githubusercontent URL **pinned to the commit SHA**, mimeType application/zip). Then, in ExecuteWixAPI: generate-file-download-url → GET as base64 → `wix.unzip` → `wix.multipart` → POST `/headless-business-setup/v1/headless-business/<siteId>/drop`. A drop replaces the whole site. (The Wix sandbox can't fetch GitHub directly. Wix Media download URLs work.)
+- The Wix host serves pages only at their exact file name (`/about.html`). `/about` returns 404, and custom 404 pages aren't used, so canonical links and `sitemap.xml` use `.html`. SEO redirects (`/about` → `/about.html`, old Wix paths → their redirect pages) were created with the Redirects API, but on the free test address they don't apply. Re-test once the domain is connected. Wix serves its own `robots.txt` and `sitemap.xml` over ours.
+- The free site shows a "Built on Wix Headless" badge that covers the chat button. The Premium plan should remove it.
+- Going live: Kayla moves the Premium plan from the old site to "FHA Website" (Premium Subscriptions → ⋯ → Assign to a Different Site). Then the domain (already in the account, primary on the old site) is moved with the Domain Assignments API (old site has only this domain → unassign, assign to new site, it becomes primary). Ask Kayla before moving it. DNS already points at Wix. Email (MX at Xneelo) is unaffected.
+
 ## Design system
 
 - Colours: cream `#F6F1E7`, sand `#EFE8DA`, deep green `#22352B`, ink `#17211B`, gold `#F2B632` (Donate buttons), gold-ink `#8A5A00` (labels), muted `#4A5650`.
