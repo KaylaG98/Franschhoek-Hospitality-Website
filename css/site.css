@@ -658,3 +658,8 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 /* Tall, narrow logos (e.g. PACT) */
 .logo-box img.logo-tall{max-height:96px}
 .logo-strip img.logo-tall{height:84px}
+/* Home: on phones the donation box moves below Learn/Work/Lead and Shaandre's story (js/site.js) */
+.give-slot{display:none}
+@media (max-width:900px){.give-slot.filled{display:block}}
+.give-slot .donate-box{margin:0 auto;max-width:520px}
+.give-slot .donate-box p{color:var(--muted);font-size:15px}

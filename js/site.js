@@ -544,3 +544,18 @@
     answer(q);
   });
 })();
+
+// Home page: on phones, show the donation box after "Learn. Work. Lead." and Shaandre's story
+(function () {
+  var box = document.getElementById('give');
+  var slot = document.querySelector('.give-slot');
+  if (!box || !slot || !window.matchMedia) return;
+  var home = box.parentNode, spot = slot.querySelector('.wrap'), mq = window.matchMedia('(max-width: 900px)');
+  function place() {
+    var target = mq.matches ? spot : home;
+    if (box.parentNode !== target) target.appendChild(box);
+    slot.classList.toggle('filled', mq.matches);
+  }
+  place();
+  if (mq.addEventListener) mq.addEventListener('change', place); else mq.addListener(place);
+})();
