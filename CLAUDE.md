@@ -15,7 +15,7 @@ This repository is the new website for **Franschhoek Hospitality Academy & Learn
 2. **Keep it simple and hand-over friendly:** no frameworks and no build tools beyond `build.py`. A future handover may move the site to Webflow or similar.
 3. Kayla wants to send a screenshot or note and have Claude make the change and publish it.
 4. Kayla is paid monthly to update the site. The monthly update is one **Academy Diary** post ("what happened this month"), one "Where are they now?" graduate spotlight, a home page story refresh, and date or sponsor housekeeping.
-5. All emails use the **@franschhoekhospitalityacademy.co.za** domain.
+5. Emails shown on the site use the short **@fhalc.co.za** domain (e.g. shaneill@fhalc.co.za).
 6. Kayla confirmed the facts below are correct. She'll edit wording later if needed.
 7. The original approved wireframes are a Claude Design canvas, "FHA Website Redesign" (https://claude.ai/artifact/JZ4NiozBRNdKnH9jDW7a5P), with desktop and mobile artboards for all 7 pages. The code in this repo already implements them, so treat the code as the source of truth.
 
@@ -68,8 +68,9 @@ Nobody could find the Xneelo login for the domain, so the site is hosted as a Wi
 - 156 graduates 2018–2025 (178 enrolled) · 96% in full-time work (150 of 156) · 717 people trained directly incl. evening/short courses · ~4,200 indirectly impacted (one employed person supports up to 6) · 17 ITM College Austria scholars so far (list on study.html#itm) · satellite campus with PACT in Prince Albert. Sources: FHA Funding Report 2 (Q2 2026) and Impact & Employment Outcomes report, supplied by Kayla Nov 2026. (The old 587 / 3,500+ figures from IOL were wrong; don't reuse them.)
 - Founded 2018 by Michaela Julian, Tarryn Corlett and Brian Moor. Jeremy Davids is Academy Head. Moved into the former Haute Cabrière Education Centre in May 2023. Partnership with Prince Albert Community Trust (PACT) from Feb 2026.
 - Charitable Trust IT000107/2017(C) · registered PBO · Section 18A certificates.
-- Address: Farm Cabrière, Daniel Hugo Street, Franschhoek 7690 · +27 60 381 0083 · Admissions: Shaneill Jefthas, 081 009 5157, shaneill@franschhoekhospitalityacademy.co.za · Donations: michaela@franschhoekhospitalityacademy.co.za (Kayla to confirm this mailbox exists).
+- Address: Farm Cabrière, Daniel Hugo Street, Franschhoek 7690 · +27 60 381 0083 · Admissions: Shaneill Jefthas, 060 381 0083 (also WhatsApp), shaneill@fhalc.co.za · Donations & partnerships: michaela@fhalc.co.za · Section 18A certificates and monthly-donor notices go to Shaneill. Show the short @fhalc.co.za addresses on the site (Kayla, Nov 2026). The forms still deliver to shaneill@franschhoekhospitalityacademy.co.za (activated FormSubmit address).
 - SnapScan: https://pos.snapscan.io/qr/XSVFnKWE · PayPal: https://www.paypal.com/donate/?hosted_button_id=X4SWXWH5K4P5E · EFT: ABSA, account 4091772620, branch 632005, Swift ABSAZAJJ, reference name + surname.
+- ITM scholarships are applied for (thorough selection process and preparation), never "won".
 - Programme: 9 months full-time (11 Jan – 30 Sep 2027), Mon–Fri 8am–5pm, then a 4-month work placement. 2027 applications closed 30 October 2026: the application form is paused (saved in `src/_application-form.html`) and study.html#apply-form says applications for 2028 open in September 2027 (no sign-up). 2027 fees (from the official application form): registration R2,800 once-off if selected, paid as a R1,400 deposit by 31 Dec 2026 plus R1,400 on 11 Jan 2027; monthly fees R1,400 due on the 7th.
 - Home page student story: Shaandre, Class of 2018, hospitality supervisor at Plaisir (interview: https://youtu.be/7DpkWPbGEUw). Home page graduation film is the 2024 graduation; the Our Impact film is the 2023 graduation.
 - Donations: SnapScan is once-off; the donate boxes open SnapScan in a new tab with the amount pre-filled (`?amount=` in cents). Monthly giving goes to the stop-order steps at `support-us.html#monthly`.

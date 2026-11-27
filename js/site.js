@@ -198,7 +198,7 @@
       p.setAttribute('role', 'status');
       p.innerHTML = (news ? 'Online sign-up is coming soon. To get the Academy Diary now, email '
                           : 'This form is not switched on yet. Please email ') +
-        '<a href="mailto:' + to + '@franschhoekhospitalityacademy.co.za">' + to + '@franschhoekhospitalityacademy.co.za</a>.';
+        '<a href="mailto:' + to + '@fhalc.co.za">' + to + '@fhalc.co.za</a>.';
       f.insertAdjacentElement(news ? 'afterend' : 'beforeend', p);
     });
   });
@@ -280,7 +280,7 @@
             if (/activat/i.test(res.message || '')) {
               // First message to a new address: FormSubmit emails Shaneill an "Activate Form" link instead of delivering it
               btn.disabled = false; btn.textContent = label;
-              say('This form is still being switched on, so your message wasn\u2019t delivered. Please email <a href="mailto:shaneill@franschhoekhospitalityacademy.co.za">shaneill@franschhoekhospitalityacademy.co.za</a> or WhatsApp 081 009 5157.');
+              say('This form is still being switched on, so your message wasn\u2019t delivered. Please email <a href="mailto:shaneill@fhalc.co.za">shaneill@fhalc.co.za</a> or WhatsApp 060 381 0083.');
               return;
             }
             throw new Error(res.message || 'failed');
@@ -291,7 +291,7 @@
         })
         .catch(function () {
           btn.disabled = false; btn.textContent = label;
-          say('Sorry, your message didn\u2019t send. Please email <a href="mailto:shaneill@franschhoekhospitalityacademy.co.za">shaneill@franschhoekhospitalityacademy.co.za</a> or WhatsApp 081 009 5157.');
+          say('Sorry, your message didn\u2019t send. Please email <a href="mailto:shaneill@fhalc.co.za">shaneill@fhalc.co.za</a> or WhatsApp 060 381 0083.');
         });
     });
   });
