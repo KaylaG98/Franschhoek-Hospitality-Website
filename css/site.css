@@ -154,8 +154,8 @@ p{margin:0}
 .door.white{background:var(--white);border:1px solid var(--card-line)}
 
 /* Logos */
-.logo-strip{display:flex;flex-wrap:wrap;justify-content:center;gap:20px 52px;align-items:center;font-family:var(--serif);font-weight:600;font-size:22px;color:var(--muted)}
-.logo-strip img{height:56px;width:auto;object-fit:contain;mix-blend-mode:multiply}
+.logo-strip{display:flex;flex-wrap:wrap;justify-content:center;gap:28px 52px;align-items:center;font-family:var(--serif);font-weight:600;font-size:22px;color:var(--muted)}
+.logo-strip img{--k:1;width:calc(var(--w,120) * var(--k) * 1px);height:auto;max-width:42%;mix-blend-mode:multiply}
 .logo-tile{background:var(--white);border:1px solid var(--card-line);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 .logo-box{width:100%;height:96px;border:1px dashed #CFC5B2;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:20px;color:var(--muted)}
 .logo-box img{max-height:76px;width:auto}
@@ -663,3 +663,5 @@ a[href^="mailto"]{overflow-wrap:anywhere;word-break:break-word}
 @media (max-width:900px){.give-slot.filled{display:block}}
 .give-slot .donate-box{margin:0 auto;max-width:520px}
 .give-slot .donate-box p{color:var(--muted);font-size:15px}
+/* Home logo strip: every logo gets about the same visual size (widths set in index.html) */
+@media (max-width:600px){.logo-strip{gap:26px 32px}.logo-strip img{--k:.82}}
